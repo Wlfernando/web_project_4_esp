@@ -1,0 +1,6 @@
+.profile__avatar {
+  background-image: url(/images/Profile/Profile__Jacques-Costeau.jpg);
+  border-radius: 50%;
+  background-position: center;
+  background-size: 100%;
+}

@@ -1,0 +1,8 @@
+.profile {
+  width: 98%;
+  padding-top: 40px;
+  display: grid;
+  grid-template-rows: 120px;
+  grid-template-columns: 120px minmax(300px, 100%) 150px;
+  gap: 31px;
+}
