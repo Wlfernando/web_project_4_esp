@@ -10,4 +10,9 @@
   background-image: url(../../../images/Button/Add.svg);
   background-repeat: no-repeat;
   background-position: center center;
+  transition: opacity 100ms ease-out 0ms;
+}
+
+.profile__add-button:hover {
+  opacity: .5;
 }
