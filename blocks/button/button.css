@@ -1,2 +1,14 @@
 .button {
-  /* display: none; */
+  background-position: center center;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  border: 0px;
+  cursor: pointer;
+  transition: opacity 100ms ease-out 0ms;
+}
+
+.button:hover {
+  opacity: .5;
+}
