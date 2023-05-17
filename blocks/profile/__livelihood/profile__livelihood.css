@@ -3,3 +3,10 @@
   line-height: 1.2;
   font-weight: 400;
 }
+
+@media screen and (max-width: 580px) {
+  .profile__livelihood {
+    text-align: center;
+    line-height: 1.5;
+  }
+}
