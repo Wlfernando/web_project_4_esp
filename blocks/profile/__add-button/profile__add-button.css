@@ -7,7 +7,3 @@
   border-radius: 4px;
     align-self: center;
 }
-
-.profile__add-button:hover {
-  opacity: .5;
-}
