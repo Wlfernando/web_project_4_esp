@@ -1,0 +1,15 @@
+.modal-box {
+  z-index: 1;
+  max-width: 430px;
+  min-width: calc(320px - 10%);
+  width: 90%;
+  height: 330px;
+  background-color: white;
+  border-radius: 8px;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

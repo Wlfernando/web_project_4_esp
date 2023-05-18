@@ -1,0 +1,8 @@
+.modal-box__btn {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+}
