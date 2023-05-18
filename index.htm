@@ -34,16 +34,19 @@
                 class="button profile__edit-button"
               ></button>
             </p>
-            <p class="profile__livelihood">Explorador</p>
+            <p class="profile__about-me">Explorador</p>
           </div>
-          <form class="modal-box add-box">
-            <fieldset class="modal-box__content">
-              <h3 class="modal-box__title">Nuevo lugar</h3>
-              <input type="text" name="" required placeholder="Nombre">
-              <input type="text" name="" required placeholder="Acerca de mí">
-              <button type="submit" class="button modal-box__btn">Guardar</button>
-            </fieldset>
-          </form>
+          <div class="popup popup_active">
+            <form class="popup__container profile-box">
+              <fieldset class="modal-box">
+                <h3 class="modal-box__title">Editar Perfil</h3>
+                <input class="modal-box__item" type="text" name="profileName" required value="" placeholder="Nombre">
+                <input class="modal-box__item" type="text" name="aboutMe" value="" placeholder="Acerca de mí">
+                <button type="submit" class="button modal-box__save-btn">Guardar</button>
+              </fieldset>
+              <button type="button" class="button modal-box__close-btn"></button>
+            </form>
+          </div>
           <button class="button profile__add-button"></button>
         </section>
         <section class="cards">

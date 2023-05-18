@@ -1,11 +1,11 @@
-.profile__livelihood {
+.profile__about-me {
   font-size: 18px;
   line-height: 1.2;
   font-weight: 400;
 }
 
 @media screen and (max-width: 580px) {
-  .profile__livelihood {
+  .profile__about-me {
     text-align: center;
     line-height: 1.5;
   }

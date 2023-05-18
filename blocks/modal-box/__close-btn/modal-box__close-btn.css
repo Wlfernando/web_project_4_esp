@@ -1,0 +1,14 @@
+.modal-box__close-btn {
+  background-image: url(../../../images/Button/Close-Icon.svg);
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -45px;
+  right: -45px;
+}
+
+@media screen and (width <= 580px) {
+  .modal-box__close-btn {
+    right: 0;
+  }
+}

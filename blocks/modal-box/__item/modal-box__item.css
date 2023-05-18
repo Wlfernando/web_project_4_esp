@@ -1,0 +1,11 @@
+.modal-box__item {
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid #C4C4C4;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 1.2;
+  font-family: inherit;
+  opacity: .5;
+}
