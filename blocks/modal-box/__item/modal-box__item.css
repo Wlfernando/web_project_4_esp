@@ -3,9 +3,15 @@
   box-sizing: border-box;
   border: 0;
   border-bottom: 1px solid #C4C4C4;
-  background-color: transparent;
   font-size: 14px;
   line-height: 1.2;
   font-family: inherit;
+}
+
+.modal-box__item::placeholder {
   opacity: .5;
+}
+
+.modal-box__item:focus {
+  outline-color: #77adf3;
 }

@@ -40,14 +40,25 @@
             <form class="popup__container profile-box">
               <fieldset class="modal-box">
                 <h3 class="modal-box__title">Editar Perfil</h3>
-                <input class="modal-box__item" type="text" name="profileName" required value="" placeholder="Nombre">
-                <input class="modal-box__item" type="text" name="aboutMe" value="" placeholder="Acerca de mí">
+                <input class="modal-box__item" type="text" name="profileName" required value="Jacques Cousteau" placeholder="Nombre">
+                <input class="modal-box__item" type="text" name="aboutMe" value="Explorador" placeholder="Acerca de mí">
                 <button type="submit" class="button modal-box__save-btn">Guardar</button>
               </fieldset>
               <button type="button" class="button modal-box__close-btn"></button>
             </form>
           </div>
           <button class="button profile__add-button"></button>
+          <div class="popup popup_active">
+            <form class="popup__container profile-box">
+              <fieldset class="modal-box">
+                <h3 class="modal-box__title">Nuevo Lugar</h3>
+                <input class="modal-box__item" type="text" name="profileName" required value="" placeholder="Título">
+                <input class="modal-box__item" type="text" name="aboutMe" value="" placeholder="Enlace de la imagen">
+                <button type="submit" class="button modal-box__save-btn">Crear</button>
+              </fieldset>
+              <button type="button" class="button modal-box__close-btn"></button>
+            </form>
+          </div>
         </section>
         <section class="cards">
           <div class="card">
