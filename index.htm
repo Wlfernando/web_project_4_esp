@@ -29,22 +29,37 @@
         <section class="profile">
           <div class="profile__avatar"></div>
           <div class="profile__info">
-            <p class="profile__user-name">
-              Jacques Cousteau<button
-                class="button profile__edit-button"
-              ></button>
-            </p>
+            <p class="profile__user-name">Jacques Cousteau</p>
+            <button class="button profile__edit-button"></button>
             <p class="profile__about-me">Explorador</p>
           </div>
           <div class="popup popup_active">
             <form class="popup__container profile-box">
               <fieldset class="modal-box">
                 <h3 class="modal-box__title">Editar Perfil</h3>
-                <input class="modal-box__item" type="text" name="profileName" required value="Jacques Cousteau" placeholder="Nombre">
-                <input class="modal-box__item" type="text" name="aboutMe" value="Explorador" placeholder="Acerca de mí">
-                <button type="submit" class="button modal-box__save-btn">Guardar</button>
+                <input
+                  class="modal-box__item"
+                  type="text"
+                  name="profileName"
+                  required
+                  value="Jacques Cousteau"
+                  placeholder="Nombre"
+                />
+                <input
+                  class="modal-box__item"
+                  type="text"
+                  name="aboutMe"
+                  value="Explorador"
+                  placeholder="Acerca de mí"
+                />
+                <button type="button" class="button modal-box__save-btn">
+                  Guardar
+                </button>
               </fieldset>
-              <button type="button" class="button modal-box__close-btn"></button>
+              <button
+                type="button"
+                class="button modal-box__close-btn"
+              ></button>
             </form>
           </div>
           <button class="button profile__add-button"></button>
@@ -52,11 +67,29 @@
             <form class="popup__container profile-box">
               <fieldset class="modal-box">
                 <h3 class="modal-box__title">Nuevo Lugar</h3>
-                <input class="modal-box__item" type="text" name="profileName" required value="" placeholder="Título">
-                <input class="modal-box__item" type="text" name="aboutMe" value="" placeholder="Enlace de la imagen">
-                <button type="submit" class="button modal-box__save-btn">Crear</button>
+                <input
+                  class="modal-box__item"
+                  type="text"
+                  name="profileName"
+                  required
+                  value=""
+                  placeholder="Título"
+                />
+                <input
+                  class="modal-box__item"
+                  type="text"
+                  name="aboutMe"
+                  value=""
+                  placeholder="Enlace de la imagen"
+                />
+                <button type="submit" class="button modal-box__save-btn">
+                  Crear
+                </button>
               </fieldset>
-              <button type="button" class="button modal-box__close-btn"></button>
+              <button
+                type="button"
+                class="button modal-box__close-btn"
+              ></button>
             </form>
           </div>
         </section>
@@ -71,37 +104,47 @@
             <button class="button card__like-button"></button>
           </div>
           <div class="card">
-            <img src="./images/Card/Louise's-lake.jpg" alt="Louise's lake" class="card__image" /><button
-              class="button card__trash-button"
-            ></button>
+            <img
+              src="./images/Card/Louise's-lake.jpg"
+              alt="Louise's lake"
+              class="card__image"
+            /><button class="button card__trash-button"></button>
             <h2 class="card__place-name">Lago Louise</h2>
             <button class="button card__like-button"></button>
           </div>
           <div class="card">
-            <img src="./images/Card/bald-mountains.jpg" alt="Bald Mountains" class="card__image" /><button
-              class="button card__trash-button"
-            ></button>
+            <img
+              src="./images/Card/bald-mountains.jpg"
+              alt="Bald Mountains"
+              class="card__image"
+            /><button class="button card__trash-button"></button>
             <h2 class="card__place-name">Montañas Calvas</h2>
             <button class="button card__like-button"></button>
           </div>
           <div class="card">
-            <img src="./images/Card/Latemar.jpg" alt="Latemar" class="card__image" /><button
-              class="button card__trash-button"
-            ></button>
+            <img
+              src="./images/Card/Latemar.jpg"
+              alt="Latemar"
+              class="card__image"
+            /><button class="button card__trash-button"></button>
             <h2 class="card__place-name">Latemar</h2>
             <button class="button card__like-button"></button>
           </div>
           <div class="card">
-            <img src="./images/Card/Vanois-National.jpg" alt="Vanoise National Park" class="card__image" /><button
-              class="button card__trash-button"
-            ></button>
+            <img
+              src="./images/Card/Vanois-National.jpg"
+              alt="Vanoise National Park"
+              class="card__image"
+            /><button class="button card__trash-button"></button>
             <h2 class="card__place-name">Vanoise National Park</h2>
             <button class="button card__like-button"></button>
           </div>
           <div class="card">
-            <img src="./images/Card/Lago-di-Braies.jpg" alt="Di Braies's lake" class="card__image" /><button
-              class="button card__trash-button"
-            ></button>
+            <img
+              src="./images/Card/Lago-di-Braies.jpg"
+              alt="Di Braies's lake"
+              class="card__image"
+            /><button class="button card__trash-button"></button>
             <h2 class="card__place-name">Lago di Braies</h2>
             <button class="button card__like-button"></button>
           </div>
