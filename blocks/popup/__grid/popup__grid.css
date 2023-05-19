@@ -1,0 +1,9 @@
+.popup__grid {
+  width: 80%;
+  display: grid;
+  grid-template-rows: repeat(auto, 2);
+  grid-template-columns: auto;
+  align-content: center;
+  justify-content: center;
+  gap: 10px;
+}
