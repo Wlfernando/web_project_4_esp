@@ -64,21 +64,21 @@
           </div>
           <button class="button profile__add-button"></button>
           <div class="popup">
-            <form class="popup__container profile-box">
+            <form class="popup__container image-form">
               <fieldset class="modal-box">
                 <h3 class="modal-box__title">Nuevo Lugar</h3>
                 <input
                   class="modal-box__item"
                   type="text"
-                  name="profileName"
-                  required
+                  name="imageName"
                   value=""
                   placeholder="Título"
                 />
                 <input
                   class="modal-box__item"
                   type="text"
-                  name="aboutMe"
+                  name="imageSrc"
+                  required
                   value=""
                   placeholder="Enlace de la imagen"
                 />
@@ -92,16 +92,20 @@
               ></button>
             </form>
           </div>
-          <figure class="popup ñpopup_active">
-            <div class="popup__grid">
+          <div class="popup">
+            <figure class="popup__image-container">
               <img
                 class="popup__image"
-                src="./images/Card/raimond-klavins-uAk731NvaJo-unsplash (1).jpg"
+                src=""
                 alt="Imagen subida"
               />
-              <figcaption class="popup__title-image">El Gran Cañon</figcaption>
-            </div>
-          </figure>
+              <figcaption class="popup__title-image"></figcaption>
+              <button
+                type="button"
+                class="button modal-box__close-btn popup__place_popup-image"
+              ></button>
+            </figure>
+          </div>
         </section>
         <section class="cards">
           <div class="card">

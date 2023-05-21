@@ -1,0 +1,5 @@
+.popup__place_popup-image {
+  position: static;
+  grid-column: 2;
+  grid-row: 1;
+}

@@ -1,0 +1,9 @@
+.popup__image-container {
+  width: 80%;
+  display: grid;
+  grid-template-rows: repeat(auto, 3);
+  grid-template-columns: repeat(auto, 2);
+  align-content: center;
+  justify-content: center;
+  gap: 10px;
+}

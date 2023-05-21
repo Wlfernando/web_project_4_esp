@@ -4,4 +4,5 @@
   min-width: 280px;
   max-height: 540px;
   object-fit: contain;
+  grid-row: 2;
 }
