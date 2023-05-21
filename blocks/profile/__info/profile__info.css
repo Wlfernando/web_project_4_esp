@@ -1,5 +1,6 @@
 .profile__info {
+  max-width: calc(100% - (24px * 2));
   align-self: center;
   display: grid;
-  grid-template: 2fr 1fr / max-content 24px;
+  grid-template: 2fr 1fr / minmax(150px, max-content) calc(24px * 2);
 }
