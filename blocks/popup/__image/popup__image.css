@@ -1,7 +1,7 @@
 .popup__image {
   width: 100%;
   max-width: 816px;
-  min-width: 280px;
+  min-width: 230px;
   max-height: 540px;
   object-fit: contain;
   grid-row: 2;
