@@ -1,4 +1,4 @@
-.modal-box__item {
+.popup__item {
   width: 100%;
   box-sizing: border-box;
   border: 0;
@@ -8,10 +8,10 @@
   font-family: inherit;
 }
 
-.modal-box__item::placeholder {
+.popup__item::placeholder {
   opacity: .5;
 }
 
-.modal-box__item:focus {
+.popup__item:focus {
   outline-color: #77adf3;
 }
