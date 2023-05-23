@@ -8,6 +8,22 @@
   font-family: inherit;
 }
 
+.popup__item::-webkit-input-placeholder {
+  opacity: .5;
+}
+
+.popup__item::-moz-placeholder {
+  opacity: .5;
+}
+
+.popup__item:-ms-input-placeholder {
+  opacity: .5;
+}
+
+.popup__item::-ms-input-placeholder {
+  opacity: .5;
+}
+
 .popup__item::placeholder {
   opacity: .5;
 }

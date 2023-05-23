@@ -20,6 +20,10 @@ Proyecto con enfoque interactivo, en pleno desarrollo. Muestra los lugares visit
 ### Compatibilidad
 
 * Chrome
+* Safari, iOS, GNOME Web
+* Firefox
+* Opera
+* Navegadores de Microsoft
 
 ### Tecnologías
 
