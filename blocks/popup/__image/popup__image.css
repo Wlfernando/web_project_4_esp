@@ -3,6 +3,7 @@
   max-width: 816px;
   min-width: 230px;
   max-height: 540px;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   grid-row: 2;
 }

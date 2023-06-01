@@ -1,6 +1,7 @@
 .cards {
   padding-top: 46px;
   max-width: 880px;
+  padding-inline-start: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;

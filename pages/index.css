@@ -27,7 +27,7 @@
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/_active/popup_active.css);
 @import url(../blocks/popup/_place/popup_place_popup-image.css);
-@import url(../blocks/cards/cards.css);
+@import url(../blocks/card/__cards/cards.css);
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__image/card__image.css);
 @import url(../blocks/card/__trash-button/card__trash-button.css);
