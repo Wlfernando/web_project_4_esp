@@ -96,7 +96,15 @@
             </figure>
           </div>
         </section>
-        <section class="cards">
+        <ul class="cards">
+          <template id="cards">
+            <li class="card">
+              <img src="" alt="">
+              <button class="button card__trash-button"></button>
+              <h2 class="card__place-name"></h2>
+              <button class="button card__like-button"></button>
+            </li>
+          </template>
           <div class="card">
             <img
               src="./images/Card/Yosemite's-Valley.jpg"
@@ -151,7 +159,7 @@
             <h2 class="card__place-name">Lago di Braies</h2>
             <button class="button card__like-button"></button>
           </div>
-        </section>
+        </ul>
       </main>
       <footer class="footer">
         <p class="footer__copyright">&copy; 2023. Fernando A. Malfavón</p>
