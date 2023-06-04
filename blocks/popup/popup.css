@@ -6,7 +6,10 @@
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.7);
-  display: none;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 250ms, opacity 250ms ease-in-out; 
   flex-direction: column;
   align-items: center;
   justify-content: center;
