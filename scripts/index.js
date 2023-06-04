@@ -3,12 +3,11 @@ const profile = document.querySelector(".profile");
 const editProfileBtn = profile.querySelector(".profile__edit-button");
 const addBtn = profile.querySelector(".profile__add-button");
 
-const cardsContainer = document.querySelector('.cards');
-
 // Pop ups
 const popUpActive = profile.querySelectorAll(".popup");
 const popUpProfileForm = popUpActive[0];
 const inputImg = popUpActive[1];
+const displayImage = popUpActive[2];
 const closeBtn = profile.querySelectorAll(".popup__close-btn");
 
 // Popup profile
@@ -20,7 +19,7 @@ const pageAboutMe = profile.querySelector('.profile__about-me');
 const saveBtn = popUpActive[0].querySelector('.popup__save-btn');
 
 const formImage = popUpActive[1].querySelector('.image-form');
-const displayImage = popUpActive[2];
+const cardsContainer = document.querySelector('.cards');
 
 editProfileBtn.addEventListener("click", function openProfileEdit () {
   popUpProfileForm.classList.add("popup_active")
