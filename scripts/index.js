@@ -109,8 +109,8 @@ formImage.addEventListener('submit', handleImageFormSubmit);
 
 function handleImageFormSubmit(evt){
   evt.preventDefault();
-  let inputImageTitle = document.querySelector('[name="imageName"]');
-  let inputImageSrc = document.querySelector('[name="imageSrc"]');
+  const inputImageTitle = document.querySelector('[name="imageName"]');
+  const inputImageSrc = document.querySelector('[name="imageSrc"]');
 
   renderCards(inputImageTitle.value, inputImageSrc.value);
 
