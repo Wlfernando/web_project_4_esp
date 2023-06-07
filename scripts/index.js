@@ -35,7 +35,11 @@ function handleProfileFormSubmit(evt){
   evt.preventDefault();
   pageProfileName.textContent = inputProfileName.value;
   pageAboutMe.textContent = inputAboutMe.value;
-  // popUpProfileForm.classList.remove("popup_active")
+
+  inputProfileName.value = '';
+  inputAboutMe.value = '';
+
+  popUpProfileForm.classList.remove("popup_active")
 };
 
 const defaultCards = [
@@ -65,7 +69,7 @@ const defaultCards = [
 }
 ];
 
-function renderCards (name, link) {
+function renderCard (name, link) {
   const cardTemplate = document.querySelector('#cards').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
@@ -95,7 +99,7 @@ function renderCards (name, link) {
   });
 };
 
-defaultCards.forEach(card => renderCards(card.name, card.link));
+defaultCards.forEach(card => renderCard(card.name, card.link));
 
 addBtn.addEventListener("click", function openImageForm () {
   inputImg.classList.add("popup_active")
@@ -113,11 +117,12 @@ function handleImageFormSubmit(evt){
   const inputImageTitle = document.querySelector('[name="imageName"]');
   const inputImageSrc = document.querySelector('[name="imageSrc"]');
 
-  renderCards(inputImageTitle.value, inputImageSrc.value);
+  renderCard(inputImageTitle.value, inputImageSrc.value);
 
   inputImageTitle.value = '';
   inputImageSrc.value = '';
-  // inputImg.classList.remove("popup_active");
+  
+  inputImg.classList.remove("popup_active");
 };
 
 const closePopUpImage = closeBtn[2].addEventListener("click", function closeImageAdd () {
