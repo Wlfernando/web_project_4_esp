@@ -1,10 +1,12 @@
 .cards {
   padding-top: 46px;
   max-width: 880px;
-  padding-inline-start: 0;
+  min-height: 48vh;
+  -webkit-padding-start: 0;
+          padding-inline-start: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   gap: 20px 17px;
 }
 
