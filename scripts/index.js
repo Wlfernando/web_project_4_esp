@@ -71,16 +71,17 @@ function renderCards (name, link) {
   const cardImage = cardElement.querySelector('.card__image');
   const rmBtn = cardElement.querySelector('.card__trash-button');
   const likeBtn = cardElement.querySelector('.card__like-button');
-  
+
   cardImage.src = link;
   cardImage.alt = name;
   cardElement.querySelector('.card__place-name').textContent = name;
-  
+
   cardsContainer.prepend(cardElement);
 
-  cardImage.addEventListener('click', () => { 
+  cardImage.addEventListener('click', () => {
     displayImage.querySelector('.popup__title-image').textContent = name;
     displayImage.querySelector('.popup__image').src = link;
+    displayImage.querySelector('.popup__image').alt = name;
     displayImage.classList.add("popup_active");
 });
 
