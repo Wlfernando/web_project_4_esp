@@ -23,7 +23,7 @@
             <p class="profile__about-me">Explorador</p>
           </div>
           <div class="popup">
-            <form class="popup__container profile-form">
+            <form class="popup__container profile-form" name="profileForm" novalidate>
               <fieldset class="popup__content">
                 <h3 class="popup__title">Editar Perfil</h3>
                 <input
@@ -31,17 +31,22 @@
                   type="text"
                   name="profileName"
                   required
-                  value="Jacques Cousteau"
+                  value=""
                   placeholder="Nombre"
+                  minlength="2"
+                  maxlength="40"
                 />
                 <input
                   class="popup__item"
                   type="text"
                   name="aboutMe"
-                  value="Explorador"
+                  value=""
                   placeholder="Acerca de mí"
+                  required
+                  minlength="2"
+                  maxlength="200"
                 />
-                <button type="submit" class="button popup__save-btn">
+                <button type="submit" class="button popup__save-btn" name="saveBtn">
                   Guardar
                 </button>
               </fieldset>
@@ -50,7 +55,7 @@
           </div>
           <button class="button profile__add-button"></button>
           <div class="popup">
-            <form class="popup__container image-form">
+            <form class="popup__container image-form" name="imageForm" novalidate>
               <fieldset class="popup__content">
                 <h3 class="popup__title">Nuevo Lugar</h3>
                 <input

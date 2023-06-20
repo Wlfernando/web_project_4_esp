@@ -11,14 +11,14 @@ const displayImage = popUpActive[2];
 const closeBtn = profile.querySelectorAll(".popup__close-btn");
 
 // Popup profile
-const formProfile = popUpActive[0].querySelector('.profile-form');
-const inputProfileName = popUpActive[0].querySelector('[name="profileName"]');
+const profileForm = document.forms.profileForm;
+const inputProfileName = document.forms.profileForm.elements.profileName;
 const pageProfileName = profile.querySelector('.profile__user-name');
-const inputAboutMe = popUpActive[0].querySelector('[name="aboutMe"]');
+const inputAboutMe = document.forms.profileForm.elements.aboutMe;
 const pageAboutMe = profile.querySelector('.profile__about-me');
-const saveBtn = popUpActive[0].querySelector('.popup__save-btn');
+const saveBtn = document.forms.profileForm.elements.saveBtn;
 
-const formImage = popUpActive[1].querySelector('.image-form');
+const imageForm = document.forms.imageForm;
 const cardsContainer = document.querySelector('.cards');
 
 editProfileBtn.addEventListener("click", function openProfileEdit () {
@@ -29,15 +29,14 @@ const closeInputProfile = closeBtn[0].addEventListener("click", function closePr
   popUpProfileForm.classList.remove("popup_active")
 });
 
-formProfile.addEventListener('submit', handleProfileFormSubmit);
+profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 function handleProfileFormSubmit(evt){
   evt.preventDefault();
   pageProfileName.textContent = inputProfileName.value;
   pageAboutMe.textContent = inputAboutMe.value;
 
-  inputProfileName.value = '';
-  inputAboutMe.value = '';
+  profileForm.reset();
 
   popUpProfileForm.classList.remove("popup_active")
 };
@@ -110,7 +109,7 @@ const closeInputImage = closeBtn[1].addEventListener("click", function closeImag
 });
 
 
-formImage.addEventListener('submit', handleImageFormSubmit);
+imageForm.addEventListener('submit', handleImageFormSubmit);
 
 function handleImageFormSubmit(evt){
   evt.preventDefault();
@@ -119,9 +118,8 @@ function handleImageFormSubmit(evt){
 
   renderCard(inputImageTitle.value, inputImageSrc.value);
 
-  inputImageTitle.value = '';
-  inputImageSrc.value = '';
-  
+  imageForm.reset();
+
   inputImg.classList.remove("popup_active");
 };
 
