@@ -8,7 +8,6 @@ const popUpActive = profile.querySelectorAll(".popup");
 const popUpProfileForm = popUpActive[0];
 const inputImg = popUpActive[1];
 const displayImage = popUpActive[2];
-const closeBtn = profile.querySelectorAll(".popup__close-btn");
 
 // Popup profile
 const profileForm = document.forms.profileForm;
@@ -25,14 +24,9 @@ editProfileBtn.addEventListener("click", function openProfileEdit () {
   popUpProfileForm.classList.add("popup_active")
 });
 
-const closeInputProfile = closeBtn[0].addEventListener("click", function closeProfileEdit () {
-  popUpProfileForm.classList.remove("popup_active")
-});
-
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 
-function handleProfileFormSubmit(/*evt*/){
-  // evt.preventDefault();
+function handleProfileFormSubmit(){
   pageProfileName.textContent = inputProfileName.value;
   pageAboutMe.textContent = inputAboutMe.value;
 
@@ -104,15 +98,9 @@ addBtn.addEventListener("click", function openImageForm () {
   inputImg.classList.add("popup_active")
 });
 
-const closeInputImage = closeBtn[1].addEventListener("click", function closeImageAdd () {
-  inputImg.classList.remove("popup_active")
-});
-
-
 imageForm.addEventListener('submit', handleImageFormSubmit);
 
-function handleImageFormSubmit(/*evt*/){
-  // evt.preventDefault();
+function handleImageFormSubmit(){
   const inputImageTitle = document.forms.imageForm.elements.imageName;
   const inputImageSrc = document.forms.imageForm.elements.imageSrc;
 
@@ -123,9 +111,21 @@ function handleImageFormSubmit(/*evt*/){
   inputImg.classList.remove("popup_active");
 };
 
-const closePopUpImage = closeBtn[2].addEventListener("click", function closeImageAdd () {
-  displayImage.classList.remove("popup_active")
-});
+const closeModal = modalElement => {
+  modalElement.classList.remove('popup_active');
+};
+
+const enableClose = () => {
+  const modalList = Array.from(profile.querySelectorAll(".popup"));
+
+  modalList.forEach(modalElement => {
+    const closeBtn = modalElement.querySelector('.popup__close-btn');
+    closeBtn.addEventListener('click', () =>
+    closeModal(modalElement))
+  })
+};
+
+enableClose();
 
 //Form Validity
 const showInputError = (formElement, inputElement, errorMessage) => {
@@ -160,8 +160,10 @@ const isValid = (formElement, inputElement) => {
   const toggleButtonState = (inputList, buttonElement) => {
     if (hasInvalidInput(inputList)) {
       buttonElement.classList.add("button_inactive");
+      buttonElement.setAttribute('disabled', true);
     } else {
       buttonElement.classList.remove("button_inactive");
+      buttonElement.removeAttribute('disabled');
     }
   };
 

@@ -1,0 +1,7 @@
+.button_inactive {
+  background-color: unset;
+  border: 1px solid black;
+  color: black;
+  opacity: .2;
+  cursor: initial;
+}
