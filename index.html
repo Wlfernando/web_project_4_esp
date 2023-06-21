@@ -29,6 +29,7 @@
                 <input
                   class="popup__item"
                   type="text"
+                  id="profile-name"
                   name="profileName"
                   required
                   value=""
@@ -36,9 +37,11 @@
                   minlength="2"
                   maxlength="40"
                 />
+                <span class="popup__item-error profile-name-error"></span>
                 <input
                   class="popup__item"
                   type="text"
+                  id="about-me"
                   name="aboutMe"
                   value=""
                   placeholder="Acerca de mí"
@@ -46,6 +49,7 @@
                   minlength="2"
                   maxlength="200"
                 />
+                <span class="popup__item-error about-me-error"></span>
                 <button type="submit" class="button popup__save-btn" name="saveBtn">
                   Guardar
                 </button>
@@ -61,18 +65,24 @@
                 <input
                   class="popup__item"
                   type="text"
+                  id="image-name"
                   name="imageName"
                   value=""
                   placeholder="Título"
+                  minlength="2"
+                  maxlength="30"
                 />
+                <span class="popup__item-error image-name-error"></span>
                 <input
                   class="popup__item"
-                  type="text"
+                  type="url"
+                  id="image-src"
                   name="imageSrc"
                   required
                   value=""
                   placeholder="Enlace de la imagen"
                 />
+                <span class="popup__item-error image-src-error"></span>
                 <button type="submit" class="button popup__save-btn">
                   Crear
                 </button>

@@ -1,0 +1,7 @@
+.popup__item-error_active {
+  color: #FF0000;
+  visibility: visible;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 400;
+}

@@ -6,6 +6,7 @@
   font-size: 14px;
   line-height: 1.2;
   font-family: inherit;
+  transition: border-bottom 250ms ease-in;
 }
 
 .popup__item::-webkit-input-placeholder {
