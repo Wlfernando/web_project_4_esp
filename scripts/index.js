@@ -131,7 +131,7 @@ function enableClose() {
 
   modalList.forEach(modalElement => {
     modalElement.addEventListener('click', (evt) => {
-      if(evt.target == popUpProfileForm || inputImg || displayImage) {
+      if(evt.target === document.querySelector('.popup_active')) {
       closeModal(modalElement)}
   })})
 };
