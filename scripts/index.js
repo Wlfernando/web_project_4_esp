@@ -115,20 +115,25 @@ const closeModal = modalElement => {
   modalElement.classList.remove('popup_active');
 };
 
-function escapeHandler (evt, modalElement) {
-  if (evt.key === 'Escape') {
-    closeModal(modalElement);
-  }
-}
-
-const enableClose = () => {
+function enableClose() {
   const modalList = Array.from(profile.querySelectorAll(".popup"));
 
   modalList.forEach(modalElement => {
     const closeBtn = modalElement.querySelector('.popup__close-btn');
-    closeBtn.addEventListener('click', () =>
-    closeModal(modalElement));
-  })
+    closeBtn.addEventListener('click', () => closeModal(modalElement));
+  });
+
+  modalList.forEach(modalElement => {
+    document.addEventListener('keydown', evt => {
+    if(evt.key === 'Escape'){
+      closeModal(modalElement)
+    }})});
+
+  modalList.forEach(modalElement => {
+    modalElement.addEventListener('click', (evt) => {
+      if(evt.target == popUpProfileForm || inputImg || displayImage) {
+      closeModal(modalElement)}
+  })})
 };
 
 enableClose();
