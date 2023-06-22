@@ -1,5 +1,6 @@
 .popup__image-container {
-  width: 80%;
+  max-width: 80%;
+  width: fit-content;
   display: grid;
   grid-template-rows: repeat(auto, 3);
   grid-template-columns: repeat(auto, 2);
