@@ -73,8 +73,6 @@ function renderCard (name, link) {
   cardImage.alt = name;
   cardElement.querySelector('.card__place-name').textContent = name;
 
-  cardsContainer.prepend(cardElement);
-
   cardImage.addEventListener('click', () => {
     displayImage.querySelector('.popup__title-image').textContent = name;
     displayImage.querySelector('.popup__image').src = link;
@@ -90,9 +88,11 @@ function renderCard (name, link) {
     const card = rmBtn.closest('.card');
     card.remove();
   });
+
+  return cardElement;
 };
 
-defaultCards.forEach(card => renderCard(card.name, card.link));
+defaultCards.forEach(card => cardsContainer.append(renderCard(card.name, card.link)))
 
 addBtn.addEventListener("click", function openImageForm () {
   inputImg.classList.add("popup_active")
@@ -104,7 +104,7 @@ function handleImageFormSubmit(){
   const inputImageTitle = document.forms.imageForm.elements.imageName;
   const inputImageSrc = document.forms.imageForm.elements.imageSrc;
 
-  renderCard(inputImageTitle.value, inputImageSrc.value);
+  cardsContainer.prepend(renderCard(inputImageTitle.value, inputImageSrc.value));
 
   imageForm.reset();
 
