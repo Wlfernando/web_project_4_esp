@@ -76,6 +76,4 @@ const enableValidation = () => {
   })
 })};
 
-
-
 enableValidation();
