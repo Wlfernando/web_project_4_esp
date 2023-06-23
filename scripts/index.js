@@ -119,11 +119,6 @@ function enableClose() {
   const modalList = Array.from(profile.querySelectorAll(".popup"));
 
   modalList.forEach(modalElement => {
-    const closeBtn = modalElement.querySelector('.popup__close-btn');
-    closeBtn.addEventListener('click', () => closeModal(modalElement));
-  });
-
-  modalList.forEach(modalElement => {
     document.addEventListener('keydown', evt => {
     if(evt.key === 'Escape'){
       closeModal(modalElement)
@@ -131,7 +126,11 @@ function enableClose() {
 
   modalList.forEach(modalElement => {
     modalElement.addEventListener('click', (evt) => {
-      if(evt.target === document.querySelector('.popup_active')) {
+      const closeBtn = modalElement.querySelector('.popup__close-btn');
+      if(
+        evt.target === document.querySelector('.popup_active') ||
+        evt.target === document.querySelector('.popup__image-container') ||
+        evt.target === closeBtn) {
       closeModal(modalElement)}
   })})
 };
