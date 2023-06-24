@@ -1,13 +1,10 @@
 // Btns on profile
 const profile = document.querySelector(".profile");
-const editProfileBtn = profile.querySelector(".profile__edit-button");
-const addBtn = profile.querySelector(".profile__add-button");
+const profileFormBtn = profile.querySelector(".profile__edit-button");
+const cardFormBtn = profile.querySelector(".profile__add-button");
 
 // Pop ups
 const popUpActive = profile.querySelectorAll(".popup");
-const popUpProfileForm = popUpActive[0];
-const inputImg = popUpActive[1];
-const displayImage = popUpActive[2];
 
 // Popup profile
 const profileForm = document.forms.profileForm;
@@ -20,9 +17,9 @@ const saveBtn = document.forms.profileForm.elements.saveBtn;
 const imageForm = document.forms.imageForm;
 const cardsContainer = document.querySelector('.cards');
 
-editProfileBtn.addEventListener("click", function openProfileEdit () {
-  popUpProfileForm.classList.add("popup_active")
-});
+profileFormBtn.addEventListener("click", function () {
+  popUpActive[0].classList.add("popup_active");
+})
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 
@@ -66,6 +63,7 @@ function renderCard (name, link) {
   const cardTemplate = document.querySelector('#cards').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
+  const displayImage = popUpActive[2];
   const rmBtn = cardElement.querySelector('.card__trash-button');
   const likeBtn = cardElement.querySelector('.card__like-button');
 
@@ -94,13 +92,13 @@ function renderCard (name, link) {
 
 defaultCards.forEach(card => cardsContainer.append(renderCard(card.name, card.link)))
 
-addBtn.addEventListener("click", function openImageForm () {
-  inputImg.classList.add("popup_active")
+cardFormBtn.addEventListener("click", function () {
+  popUpActive[1].classList.add("popup_active")
 });
 
-imageForm.addEventListener('submit', handleImageFormSubmit);
+imageForm.addEventListener('submit', handleCardFormSubmit);
 
-function handleImageFormSubmit(){
+function handleCardFormSubmit(){
   const inputImageTitle = document.forms.imageForm.elements.imageName;
   const inputImageSrc = document.forms.imageForm.elements.imageSrc;
 
@@ -108,7 +106,7 @@ function handleImageFormSubmit(){
 
   imageForm.reset();
 
-  inputImg.classList.remove("popup_active");
+  popUpActive[1].classList.remove("popup_active");
 };
 
 const closeModal = modalElement => {
