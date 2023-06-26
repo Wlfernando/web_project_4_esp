@@ -29,7 +29,7 @@ function handleProfileFormSubmit(){
 
   profileForm.reset();
 
-  popUpProfileForm.classList.remove("popup_active")
+  popUpActive[0].classList.remove("popup_active")
 };
 
 const defaultCards = [
