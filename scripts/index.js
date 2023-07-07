@@ -7,6 +7,8 @@ const cardFormBtn = profile.querySelector(".profile__add-button");
 const popUpActive = profile.querySelectorAll(".popup");
 
 // Popup profile
+const inputImageTitle = document.forms.imageForm.elements.imageName;
+const inputImageSrc = document.forms.imageForm.elements.imageSrc;
 const profileForm = document.forms.profileForm;
 const inputProfileName = document.forms.profileForm.elements.profileName;
 const pageProfileName = profile.querySelector('.profile__user-name');
@@ -83,8 +85,7 @@ function renderCard (name, link) {
   );
 
   rmBtn.addEventListener('click', () => {
-    const card = rmBtn.closest('.card');
-    card.remove();
+    rmBtn.closest('.card').remove();
   });
 
   return cardElement;
@@ -99,9 +100,6 @@ cardFormBtn.addEventListener("click", function () {
 imageForm.addEventListener('submit', handleCardFormSubmit);
 
 function handleCardFormSubmit(){
-  const inputImageTitle = document.forms.imageForm.elements.imageName;
-  const inputImageSrc = document.forms.imageForm.elements.imageSrc;
-
   cardsContainer.prepend(renderCard(inputImageTitle.value, inputImageSrc.value));
 
   imageForm.reset();
@@ -113,24 +111,43 @@ const closeModal = modalElement => {
   modalElement.classList.remove('popup_active');
 };
 
+const clearContent = modalElement => {
+  setTimeout(() => {
+    if(modalElement.querySelector('.popup__image-container')) {
+      modalElement.querySelector('.popup__title-image').textContent = '';
+      modalElement.querySelector('.popup__image').src = '';
+      modalElement.querySelector('.popup__image').alt = ''
+    } else if(modalElement.querySelector('.profile-form')) {
+      inputProfileName.value = 'Jacques Cousteau';
+      inputAboutMe.value = 'Explorador'
+    } else {
+      inputImageTitle.value = '';
+      inputImageSrc.value = ''
+    }
+  }, 200)
+}
+
 function enableClose() {
   const modalList = Array.from(profile.querySelectorAll(".popup"));
 
   modalList.forEach(modalElement => {
     document.addEventListener('keydown', evt => {
-    if(evt.key === 'Escape'){
-      closeModal(modalElement)
-    }})});
-
-  modalList.forEach(modalElement => {
-    modalElement.addEventListener('click', (evt) => {
+      if(evt.key === 'Escape'){
+        closeModal(modalElement);
+        clearContent(modalElement)
+      }
+    })
+    modalElement.addEventListener('click', evt => {
       const closeBtn = modalElement.querySelector('.popup__close-btn');
       if(
         evt.target === document.querySelector('.popup_active') ||
         evt.target === document.querySelector('.popup__image-container') ||
         evt.target === closeBtn) {
-      closeModal(modalElement)}
-  })})
+      closeModal(modalElement);
+      clearContent(modalElement)
+      }
+    })
+  });
 };
 
 enableClose();
