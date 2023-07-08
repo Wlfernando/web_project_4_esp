@@ -1,10 +1,12 @@
+import Card from './card.js';
+
 // Btns on profile
 const profile = document.querySelector(".profile");
 const profileFormBtn = profile.querySelector(".profile__edit-button");
 const cardFormBtn = profile.querySelector(".profile__add-button");
 
 // Pop ups
-const popUpActive = profile.querySelectorAll(".popup");
+export const popUpActive = profile.querySelectorAll(".popup");
 
 // Popup profile
 const inputImageTitle = document.forms.imageForm.elements.imageName;
@@ -14,7 +16,6 @@ const inputProfileName = document.forms.profileForm.elements.profileName;
 const pageProfileName = profile.querySelector('.profile__user-name');
 const inputAboutMe = document.forms.profileForm.elements.aboutMe;
 const pageAboutMe = profile.querySelector('.profile__about-me');
-const saveBtn = document.forms.profileForm.elements.saveBtn;
 
 const imageForm = document.forms.imageForm;
 const cardsContainer = document.querySelector('.cards');
@@ -61,7 +62,7 @@ const defaultCards = [
 }
 ];
 
-function renderCard (name, link) {
+/* function renderCard (name, link) {
   const cardTemplate = document.querySelector('#cards').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
@@ -80,8 +81,8 @@ function renderCard (name, link) {
     displayImage.classList.add("popup_active");
 });
 
-  likeBtn.addEventListener('click', evt =>
-    evt.target.classList.toggle('card__like-button_active')
+  likeBtn.addEventListener('click', () =>
+    likeBtn.classList.toggle('card__like-button_active')
   );
 
   rmBtn.addEventListener('click', () => {
@@ -91,7 +92,12 @@ function renderCard (name, link) {
   return cardElement;
 };
 
-defaultCards.forEach(card => cardsContainer.append(renderCard(card.name, card.link)))
+defaultCards.forEach(card => cardsContainer.append(renderCard(card.name, card.link))) */
+
+defaultCards.forEach( defaultCard => {
+  const card = new Card(defaultCard);
+  cardsContainer.append(card.renderCard())
+})
 
 cardFormBtn.addEventListener("click", function () {
   popUpActive[1].classList.add("popup_active")
@@ -121,21 +127,21 @@ const clearContent = modalElement => {
       inputProfileName.value = 'Jacques Cousteau';
       inputAboutMe.value = 'Explorador'
     } else {
-      inputImageTitle.value = '';
-      inputImageSrc.value = ''
+      inputImageTitle.value = null;
+      inputImageSrc.value = null
     }
   }, 200)
 }
 
-function enableClose() {
+function setCloseEventListeners() {
   const modalList = Array.from(profile.querySelectorAll(".popup"));
 
   modalList.forEach(modalElement => {
     document.addEventListener('keydown', evt => {
       if(evt.key === 'Escape'){
-        closeModal(modalElement);
-        clearContent(modalElement)
-      }
+          closeModal(modalElement);
+          clearContent(modalElement)
+        }
     })
     modalElement.addEventListener('click', evt => {
       const closeBtn = modalElement.querySelector('.popup__close-btn');
@@ -143,11 +149,11 @@ function enableClose() {
         evt.target === document.querySelector('.popup_active') ||
         evt.target === document.querySelector('.popup__image-container') ||
         evt.target === closeBtn) {
-      closeModal(modalElement);
-      clearContent(modalElement)
-      }
+          closeModal(modalElement);
+          clearContent(modalElement)
+        }
     })
   });
 };
 
-enableClose();
+setCloseEventListeners();
