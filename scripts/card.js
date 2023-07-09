@@ -1,13 +1,14 @@
 import {popUpActive} from './index.js';
 
 export default class Card {
-  constructor(item){
+  constructor(item, selector){
     this._name = item.name;
-    this._link = item.link
+    this._link = item.link;
+    this._selector = selector
   }
 
   _getTemplate() {
-    const cardTemplate = document.querySelector('#cards').content;
+    const cardTemplate = document.querySelector(this._selector).content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     return cardElement
   }

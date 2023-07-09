@@ -1,4 +1,4 @@
-const showInputError = (formElement, inputElement, errorMessage, config) => {
+/* const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
   inputElement.classList.add(config.inputErrorClass);
@@ -74,4 +74,4 @@ enableValidation({
   inactiveButtonClass: "button_inactive",
   inputErrorClass: "popup__item_type_error",
   errorClass: "popup__item-error_active"
-});
+}); */

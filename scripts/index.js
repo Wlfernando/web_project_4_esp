@@ -1,4 +1,5 @@
 import Card from './card.js';
+import FormValidator from './formValidator.js';
 
 // Btns on profile
 const profile = document.querySelector(".profile");
@@ -10,15 +11,33 @@ export const popUpActive = profile.querySelectorAll(".popup");
 
 // Popup profile
 const inputImageTitle = document.forms.imageForm.elements.imageName;
-const inputImageSrc = document.forms.imageForm.elements.imageSrc;
-const profileForm = document.forms.profileForm;
 const inputProfileName = document.forms.profileForm.elements.profileName;
 const pageProfileName = profile.querySelector('.profile__user-name');
 const inputAboutMe = document.forms.profileForm.elements.aboutMe;
 const pageAboutMe = profile.querySelector('.profile__about-me');
 
+// Popup Card submit
 const imageForm = document.forms.imageForm;
+const inputImageSrc = document.forms.imageForm.elements.imageSrc;
+const profileForm = document.forms.profileForm;
 const cardsContainer = document.querySelector('.cards');
+
+const formConfig = {
+  formSelector: ".popup__container",
+  formFieldSet: ".popup__content",
+  inputSelector: ".popup__item",
+  submitButtonSelector: ".popup__save-btn",
+  inactiveButtonClass: "button_inactive",
+  inputErrorClass: "popup__item_type_error",
+  errorClass: "popup__item-error_active"
+}
+
+const inputElements = Array.from(document.querySelectorAll('.popup__item'));
+
+inputElements.forEach(inputElement => {
+  const element = new FormValidator(formConfig, inputElement);
+  element.enableValidation()
+})
 
 profileFormBtn.addEventListener("click", function () {
   popUpActive[0].classList.add("popup_active");
@@ -62,40 +81,8 @@ const defaultCards = [
 }
 ];
 
-/* function renderCard (name, link) {
-  const cardTemplate = document.querySelector('#cards').content;
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  const cardImage = cardElement.querySelector('.card__image');
-  const displayImage = popUpActive[2];
-  const rmBtn = cardElement.querySelector('.card__trash-button');
-  const likeBtn = cardElement.querySelector('.card__like-button');
-
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardElement.querySelector('.card__place-name').textContent = name;
-
-  cardImage.addEventListener('click', () => {
-    displayImage.querySelector('.popup__title-image').textContent = name;
-    displayImage.querySelector('.popup__image').src = link;
-    displayImage.querySelector('.popup__image').alt = name;
-    displayImage.classList.add("popup_active");
-});
-
-  likeBtn.addEventListener('click', () =>
-    likeBtn.classList.toggle('card__like-button_active')
-  );
-
-  rmBtn.addEventListener('click', () => {
-    rmBtn.closest('.card').remove();
-  });
-
-  return cardElement;
-};
-
-defaultCards.forEach(card => cardsContainer.append(renderCard(card.name, card.link))) */
-
 defaultCards.forEach( defaultCard => {
-  const card = new Card(defaultCard);
+  const card = new Card(defaultCard, '#cards');
   cardsContainer.append(card.renderCard())
 })
 
@@ -106,7 +93,12 @@ cardFormBtn.addEventListener("click", function () {
 imageForm.addEventListener('submit', handleCardFormSubmit);
 
 function handleCardFormSubmit(){
-  cardsContainer.prepend(renderCard(inputImageTitle.value, inputImageSrc.value));
+  const inputCard = {};
+  inputCard.name = inputImageTitle.value;
+  inputCard.link = inputImageSrc.value;
+  const card = new Card(inputCard, '#cards')
+
+  cardsContainer.prepend(card.renderCard());
 
   imageForm.reset();
 
