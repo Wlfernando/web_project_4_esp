@@ -39,20 +39,18 @@ inputElements.forEach(inputElement => {
   element.enableValidation()
 })
 
-profileFormBtn.addEventListener("click", function () {
+profileFormBtn.addEventListener("click", function handleProfileFormOpen() {
   popUpActive[0].classList.add("popup_active");
 })
 
-profileForm.addEventListener('submit', handleProfileFormSubmit);
-
-function handleProfileFormSubmit(){
+profileForm.addEventListener('submit', function handleProfileFormSubmit() {
   pageProfileName.textContent = inputProfileName.value;
   pageAboutMe.textContent = inputAboutMe.value;
 
   profileForm.reset();
 
   popUpActive[0].classList.remove("popup_active")
-};
+})
 
 const defaultCards = [
   {
@@ -86,13 +84,15 @@ defaultCards.forEach( defaultCard => {
   cardsContainer.append(card.renderCard())
 })
 
-cardFormBtn.addEventListener("click", function () {
+cardFormBtn.addEventListener("click", function handleCardFormOpen() {
   popUpActive[1].classList.add("popup_active")
+  inputElements.forEach(inputElement => {
+    const formBtn = new FormValidator(formConfig, inputElement);
+    formBtn.resetBtnState(popUpActive[1].querySelector('.popup__save-btn'))
+  })
 });
 
-imageForm.addEventListener('submit', handleCardFormSubmit);
-
-function handleCardFormSubmit(){
+imageForm.addEventListener('submit', function handleCardFormSubmit() {
   const inputCard = {};
   inputCard.name = inputImageTitle.value;
   inputCard.link = inputImageSrc.value;
@@ -103,7 +103,7 @@ function handleCardFormSubmit(){
   imageForm.reset();
 
   popUpActive[1].classList.remove("popup_active");
-};
+});
 
 const closeModal = modalElement => {
   modalElement.classList.remove('popup_active');
@@ -119,8 +119,8 @@ const clearContent = modalElement => {
       inputProfileName.value = 'Jacques Cousteau';
       inputAboutMe.value = 'Explorador'
     } else {
-      inputImageTitle.value = null;
-      inputImageSrc.value = null
+      inputImageTitle.value = '';
+      inputImageSrc.value = ''
     }
   }, 200)
 }

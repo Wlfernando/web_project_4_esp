@@ -63,13 +63,17 @@ export default class FormValidator {
     })
   }
 
+  resetBtnState(buttonElement) {
+    buttonElement.classList.add(this._inactiveButtonClass);
+    buttonElement.setAttribute('disabled', true);
+  }
+
   enableValidation() {
     const formList = Array.from(document.querySelectorAll(this._formSelector));
 
     formList.forEach(formElement => {
       formElement.addEventListener('submit', e => {
         e.preventDefault();
-        this._toggleButtonState()
       })
 
       const fieldsetList = Array.from(formElement.querySelectorAll(this._formFieldSet));
