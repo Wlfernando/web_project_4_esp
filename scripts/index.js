@@ -7,15 +7,15 @@ const cardFormBtn = profile.querySelector(".profile__add-button");
 const popUpActive = profile.querySelectorAll(".popup");
 
 // Popup profile
-const inputImageTitle = document.forms.imageForm.elements.imageName;
+const inputImageTitle = document.forms.cardForm.elements.imageName;
 const inputProfileName = document.forms.profileForm.elements.profileName;
 const pageProfileName = profile.querySelector('.profile__user-name');
 const inputAboutMe = document.forms.profileForm.elements.aboutMe;
 const pageAboutMe = profile.querySelector('.profile__about-me');
 
 // Popup Card submit
-const imageForm = document.forms.imageForm;
-const inputImageSrc = document.forms.imageForm.elements.imageSrc;
+const cardForm = document.forms.cardForm;
+const inputImageSrc = document.forms.cardForm.elements.imageSrc;
 const profileForm = document.forms.profileForm;
 const cardsContainer = document.querySelector('.cards');
 
@@ -59,6 +59,6 @@ const defaultCards = [
 ];
 
 export { profile, profileFormBtn, cardFormBtn, popUpActive, inputImageTitle,
-  inputProfileName, pageProfileName, inputAboutMe, pageAboutMe, imageForm,
+  inputProfileName, pageProfileName, inputAboutMe, pageAboutMe, cardForm,
   inputImageSrc, profileForm, cardsContainer, inputElements, formConfig,
   defaultCards}

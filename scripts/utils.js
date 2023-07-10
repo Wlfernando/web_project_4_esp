@@ -1,5 +1,5 @@
 import { profile, profileFormBtn, cardFormBtn, popUpActive, inputImageTitle,
-  inputProfileName, pageProfileName, inputAboutMe, pageAboutMe, imageForm,
+  inputProfileName, pageProfileName, inputAboutMe, pageAboutMe, cardForm,
   inputImageSrc, profileForm, cardsContainer, inputElements, formConfig,
   defaultCards}
 from './index.js';
@@ -37,7 +37,7 @@ cardFormBtn.addEventListener("click", function handleCardFormOpen() {
   })
 });
 
-imageForm.addEventListener('submit', function handleCardFormSubmit() {
+cardForm.addEventListener('submit', function handleCardFormSubmit() {
   const inputCard = {};
   inputCard.name = inputImageTitle.value;
   inputCard.link = inputImageSrc.value;
@@ -45,7 +45,7 @@ imageForm.addEventListener('submit', function handleCardFormSubmit() {
 
   cardsContainer.prepend(card.renderCard());
 
-  imageForm.reset();
+  cardForm.reset();
 
   popUpActive[1].classList.remove("popup_active");
 });
