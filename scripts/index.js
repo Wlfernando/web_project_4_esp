@@ -29,7 +29,7 @@ const formConfig = {
   errorClass: "popup__item-error_active"
 }
 
-const inputElements = Array.from(document.querySelectorAll('.popup__item'));
+const formList = Array.from(document.querySelectorAll('.popup__container'));
 
 const defaultCards = [
   {
@@ -60,5 +60,5 @@ const defaultCards = [
 
 export { profile, profileFormBtn, cardFormBtn, popUpActive, inputImageTitle,
   inputProfileName, pageProfileName, inputAboutMe, pageAboutMe, cardForm,
-  inputImageSrc, profileForm, cardsContainer, inputElements, formConfig,
+  inputImageSrc, profileForm, cardsContainer, formList, formConfig,
   defaultCards}

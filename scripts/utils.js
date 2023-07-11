@@ -1,6 +1,6 @@
 import { profile, profileFormBtn, cardFormBtn, popUpActive, inputImageTitle,
   inputProfileName, pageProfileName, inputAboutMe, pageAboutMe, cardForm,
-  inputImageSrc, profileForm, cardsContainer, inputElements, formConfig,
+  inputImageSrc, profileForm, cardsContainer, formList, formConfig,
   defaultCards}
 from './index.js';
 import Card from './card.js';
@@ -11,9 +11,9 @@ defaultCards.forEach( defaultCard => {
   cardsContainer.append(card.renderCard())
 })
 
-inputElements.forEach(inputElement => {
-  const element = new FormValidator(formConfig, inputElement);
-  element.enableValidation()
+formList.forEach(formElement => {
+  const form = new FormValidator(formConfig, formElement);
+  form.enableValidation()
 })
 
 profileFormBtn.addEventListener("click", function handleProfileFormOpen() {
@@ -30,12 +30,11 @@ profileForm.addEventListener('submit', function handleProfileFormSubmit() {
 })
 
 cardFormBtn.addEventListener("click", function handleCardFormOpen() {
+  const formBtn = popUpActive[1].querySelector(".popup__save-btn");
+  formBtn.classList.add("button_inactive");
+  formBtn.setAttribute('disabled', true);
   popUpActive[1].classList.add("popup_active")
-  inputElements.forEach(inputElement => {
-    const formBtn = new FormValidator(formConfig, inputElement);
-    formBtn.resetBtnState(popUpActive[1].querySelector('.popup__save-btn'))
-  })
-});
+})
 
 cardForm.addEventListener('submit', function handleCardFormSubmit() {
   const inputCard = {};

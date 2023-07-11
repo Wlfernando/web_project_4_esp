@@ -1,5 +1,5 @@
 export default class FormValidator {
-  constructor(config, inputElement){
+  constructor(config, formElement){
     this._formSelector = config.formSelector;
     this._formFieldSet = config.formFieldSet;
     this._inputSelector = config.inputSelector;
@@ -8,30 +8,30 @@ export default class FormValidator {
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
 
-    this._inputElement = inputElement
+    this._formElement = formElement
   }
 
-  _showInputError(fieldset) {
-    const errorElement = fieldset.querySelector(`.${this._inputElement.id}-error`);
+  _showInputError(fieldset, inputElement, errorMessage) {
+    const errorElement = fieldset.querySelector(`.${inputElement.id}-error`);
 
-    this._inputElement.classList.add(this._inputErrorClass);
-    errorElement.textContent = this._inputElement.validationMessage;
+    inputElement.classList.add(this._inputErrorClass);
+    errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
   }
 
-  _hideInputError(fieldset) {
-    const errorElement = fieldset.querySelector(`.${this._inputElement.id}-error`);
+  _hideInputError(fieldset, inputElement) {
+    const errorElement = fieldset.querySelector(`.${inputElement.id}-error`);
 
-    this._inputElement.classList.remove(this._inputErrorClass);
+    inputElement.classList.remove(this._inputErrorClass);
     errorElement.textContent = '';
     errorElement.classList.remove(this._errorClass);
   }
 
-  _isValid(fieldset) {
-    if (!this._inputElement.validity.valid) {
-      this._showInputError(fieldset);
+  _isValid(fieldset, inputElement) {
+    if (!inputElement.validity.valid) {
+      this._showInputError(fieldset, inputElement, inputElement.validationMessage);
     } else {
-      this._hideInputError(fieldset);
+      this._hideInputError(fieldset, inputElement);
     }
   }
 
@@ -57,30 +57,24 @@ export default class FormValidator {
 
     this._toggleButtonState(inputList, buttonElement);
 
-    this._inputElement.addEventListener('input', () => {
-      this._isValid(fieldset);
-      this._toggleButtonState(inputList, buttonElement)
+    inputList.forEach(inputElement => {
+      inputElement.addEventListener('input', () => {
+        this._isValid(fieldset, inputElement);
+        this._toggleButtonState(inputList, buttonElement)
+      })
     })
   }
 
-  resetBtnState(buttonElement) {
-    buttonElement.classList.add(this._inactiveButtonClass);
-    buttonElement.setAttribute('disabled', true);
-  }
-
   enableValidation() {
-    const formList = Array.from(document.querySelectorAll(this._formSelector));
+    const form = this._formElement;
 
-    formList.forEach(formElement => {
-      formElement.addEventListener('submit', e => {
-        e.preventDefault();
-      })
+    form.addEventListener('submit', e =>
+      e.preventDefault())
 
-      const fieldsetList = Array.from(formElement.querySelectorAll(this._formFieldSet));
+    const fieldsetList = Array.from(form.querySelectorAll(this._formFieldSet));
 
-      fieldsetList.forEach((fieldset) => {
-        this._setEventListeners(fieldset);
-      })
+    fieldsetList.forEach(fieldset => {
+      this._setEventListeners(fieldset);
     })
   }
 }
