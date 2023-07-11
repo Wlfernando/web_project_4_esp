@@ -11,27 +11,27 @@ export default class FormValidator {
     this._inputElement = inputElement
   }
 
-  _showInputError(formElement) {
-    const errorElement = formElement.querySelector(`.${this._inputElement.id}-error`);
+  _showInputError(fieldset) {
+    const errorElement = fieldset.querySelector(`.${this._inputElement.id}-error`);
 
     this._inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = this._inputElement.validationMessage;
     errorElement.classList.add(this._errorClass);
   }
 
-  _hideInputError(formElement) {
-    const errorElement = formElement.querySelector(`.${this._inputElement.id}-error`);
+  _hideInputError(fieldset) {
+    const errorElement = fieldset.querySelector(`.${this._inputElement.id}-error`);
 
     this._inputElement.classList.remove(this._inputErrorClass);
     errorElement.textContent = '';
     errorElement.classList.remove(this._errorClass);
   }
 
-  _isValid(formElement) {
+  _isValid(fieldset) {
     if (!this._inputElement.validity.valid) {
-      this._showInputError(formElement);
+      this._showInputError(fieldset);
     } else {
-      this._hideInputError(formElement);
+      this._hideInputError(fieldset);
     }
   }
 
@@ -51,14 +51,14 @@ export default class FormValidator {
     }
   }
 
-  _setEventListeners(formElement) {
-    const inputList = Array.from(formElement.querySelectorAll(this._inputSelector));
-    const buttonElement = formElement.querySelector(this._submitButtonSelector);
+  _setEventListeners(fieldset) {
+    const inputList = Array.from(fieldset.querySelectorAll(this._inputSelector));
+    const buttonElement = fieldset.querySelector(this._submitButtonSelector);
 
     this._toggleButtonState(inputList, buttonElement);
 
     this._inputElement.addEventListener('input', () => {
-      this._isValid(formElement);
+      this._isValid(fieldset);
       this._toggleButtonState(inputList, buttonElement)
     })
   }
