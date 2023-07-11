@@ -1,3 +1,5 @@
+import {inputImageTitle, inputImageSrc} from './index.js';
+
 export default class FormValidator {
   constructor(config, formElement){
     this._formSelector = config.formSelector;
@@ -44,18 +46,23 @@ export default class FormValidator {
   _toggleButtonState(inputList, buttonElement) {
     if (this._hasInvalidInput(inputList)) {
       buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.setAttribute('disabled', true);
+      buttonElement.setAttribute('disabled', true)
     } else {
       buttonElement.classList.remove(this._inactiveButtonClass);
       buttonElement.removeAttribute('disabled');
     }
   }
 
-  _setEventListeners(fieldset) {
+  _setEventListeners(form, fieldset) {
     const inputList = Array.from(fieldset.querySelectorAll(this._inputSelector));
     const buttonElement = fieldset.querySelector(this._submitButtonSelector);
 
     this._toggleButtonState(inputList, buttonElement);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      setTimeout(() => this._toggleButtonState(inputList, buttonElement), 5);
+    })
 
     inputList.forEach(inputElement => {
       inputElement.addEventListener('input', () => {
@@ -67,14 +74,10 @@ export default class FormValidator {
 
   enableValidation() {
     const form = this._formElement;
-
-    form.addEventListener('submit', e =>
-      e.preventDefault())
-
     const fieldsetList = Array.from(form.querySelectorAll(this._formFieldSet));
 
     fieldsetList.forEach(fieldset => {
-      this._setEventListeners(fieldset);
+      this._setEventListeners(form, fieldset);
     })
   }
 }

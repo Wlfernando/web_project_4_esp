@@ -7,7 +7,7 @@ import Card from './card.js';
 import FormValidator from './formValidator.js';
 
 defaultCards.forEach( defaultCard => {
-  const card = new Card(defaultCard, '#cards');
+  const card = new Card(defaultCard.name, defaultCard.link, '#cards');
   cardsContainer.append(card.renderCard())
 })
 
@@ -30,17 +30,11 @@ profileForm.addEventListener('submit', function handleProfileFormSubmit() {
 })
 
 cardFormBtn.addEventListener("click", function handleCardFormOpen() {
-  const formBtn = popUpActive[1].querySelector(".popup__save-btn");
-  formBtn.classList.add("button_inactive");
-  formBtn.setAttribute('disabled', true);
   popUpActive[1].classList.add("popup_active")
 })
 
 cardForm.addEventListener('submit', function handleCardFormSubmit() {
-  const inputCard = {};
-  inputCard.name = inputImageTitle.value;
-  inputCard.link = inputImageSrc.value;
-  const card = new Card(inputCard, '#cards')
+  const card = new Card(inputImageTitle.value, inputImageSrc.value, '#cards');
 
   cardsContainer.prepend(card.renderCard());
 

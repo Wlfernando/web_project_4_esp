@@ -1,9 +1,9 @@
 import {popUpActive} from './index.js';
 
 export default class Card {
-  constructor(item, selector){
-    this._name = item.name;
-    this._link = item.link;
+  constructor(name, link, selector){
+    this._name = name;
+    this._link = link;
     this._selector = selector
   }
 
@@ -25,10 +25,13 @@ export default class Card {
   }
 
   _handleOpenPopup() {
-    popUpActive[2].querySelector('.popup__title-image').textContent = this._name;
-    popUpActive[2].querySelector('.popup__image').src = this._link;
-    popUpActive[2].querySelector('.popup__image').alt = this._name;
-    popUpActive[2].classList.add("popup_active")
+    const displayCard = popUpActive[2];
+    const displayCardImage = displayCard.querySelector('.popup__image');
+
+    displayCard.querySelector('.popup__title-image').textContent = this._name;
+    displayCardImage.src = this._link;
+    displayCardImage.alt = this._name;
+    displayCard.classList.add("popup_active")
   }
 
   _handleLikeBtn(e) {
