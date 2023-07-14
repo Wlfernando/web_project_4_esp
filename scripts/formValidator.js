@@ -1,5 +1,3 @@
-import {inputImageTitle, inputImageSrc} from './index.js';
-
 export default class FormValidator {
   constructor(config, formElement){
     this._formSelector = config.formSelector;

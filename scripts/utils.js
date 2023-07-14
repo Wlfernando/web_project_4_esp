@@ -1,13 +1,13 @@
-import { profile, profileFormBtn, cardFormBtn, popUpActive, inputImageTitle,
-  inputProfileName, pageProfileName, inputAboutMe, pageAboutMe, cardForm,
-  inputImageSrc, profileForm, cardsContainer, formList, formConfig,
-  defaultCards}
+import { profile, profileFormBtn, cardFormBtn, profileFormPopup, cardFormPopup,
+  inputImageTitle,inputProfileName, pageProfileName, inputAboutMe,
+  pageAboutMe, cardForm, inputImageSrc, profileForm, cardsContainer,
+  formList, formConfig, defaultCards}
 from './index.js';
 import Card from './card.js';
 import FormValidator from './formValidator.js';
 
 defaultCards.forEach( defaultCard => {
-  const card = new Card(defaultCard.name, defaultCard.link, '#cards');
+  const card = new Card(defaultCard, '#cards');
   cardsContainer.append(card.renderCard())
 })
 
@@ -17,7 +17,7 @@ formList.forEach(formElement => {
 })
 
 profileFormBtn.addEventListener("click", function handleProfileFormOpen() {
-  popUpActive[0].classList.add("popup_active");
+  profileFormPopup.classList.add("popup_active");
 })
 
 profileForm.addEventListener('submit', function handleProfileFormSubmit() {
@@ -26,21 +26,26 @@ profileForm.addEventListener('submit', function handleProfileFormSubmit() {
 
   profileForm.reset();
 
-  popUpActive[0].classList.remove("popup_active")
+  profileFormPopup.classList.remove("popup_active")
 })
 
 cardFormBtn.addEventListener("click", function handleCardFormOpen() {
-  popUpActive[1].classList.add("popup_active")
+  cardFormPopup.classList.add("popup_active")
 })
 
 cardForm.addEventListener('submit', function handleCardFormSubmit() {
-  const card = new Card(inputImageTitle.value, inputImageSrc.value, '#cards');
+  const inputCard = {
+    name: inputImageTitle.value,
+    link: inputImageSrc.value
+  }
+
+  const card = new Card(inputCard, '#cards');
 
   cardsContainer.prepend(card.renderCard());
 
   cardForm.reset();
 
-  popUpActive[1].classList.remove("popup_active");
+  cardFormPopup.classList.remove("popup_active");
 });
 
 const closeModal = modalElement => {

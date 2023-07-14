@@ -1,7 +1,7 @@
-import {popUpActive} from './index.js';
+import {displayCard} from './index.js';
 
 export default class Card {
-  constructor(name, link, selector){
+  constructor({name, link}, selector){
     this._name = name;
     this._link = link;
     this._selector = selector
@@ -26,7 +26,6 @@ export default class Card {
   }
 
   _handleOpenPopup() {
-    const displayCard = popUpActive[2];
     const displayCardImage = displayCard.querySelector('.popup__image');
 
     displayCard.querySelector('.popup__title-image').textContent = this._name;

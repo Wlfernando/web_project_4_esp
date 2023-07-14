@@ -4,19 +4,16 @@ const profileFormBtn = profile.querySelector(".profile__edit-button");
 const cardFormBtn = profile.querySelector(".profile__add-button");
 
 // Pop ups
-const popUpActive = profile.querySelectorAll(".popup");
+const popupActive = profile.querySelectorAll(".popup");
+const [profileFormPopup, cardFormPopup, displayCard] = popupActive;
+const forms = document.forms;
+const {profileForm, cardForm} = forms;
+const {profileName: inputProfileName, aboutMe: inputAboutMe} = profileForm.elements;
+const {imageName: inputImageTitle, imageSrc: inputImageSrc} = cardForm.elements;
 
-// Popup profile
-const inputImageTitle = document.forms.cardForm.elements.imageName;
-const inputProfileName = document.forms.profileForm.elements.profileName;
 const pageProfileName = profile.querySelector('.profile__user-name');
-const inputAboutMe = document.forms.profileForm.elements.aboutMe;
 const pageAboutMe = profile.querySelector('.profile__about-me');
 
-// Popup Card submit
-const cardForm = document.forms.cardForm;
-const inputImageSrc = document.forms.cardForm.elements.imageSrc;
-const profileForm = document.forms.profileForm;
 const cardsContainer = document.querySelector('.cards');
 
 const formConfig = {
@@ -29,7 +26,7 @@ const formConfig = {
   errorClass: "popup__item-error_active"
 }
 
-const formList = Array.from(document.querySelectorAll('.popup__container'));
+const formList = Array.from(forms);
 
 const defaultCards = [
   {
@@ -58,7 +55,7 @@ const defaultCards = [
 }
 ];
 
-export { profile, profileFormBtn, cardFormBtn, popUpActive, inputImageTitle,
-  inputProfileName, pageProfileName, inputAboutMe, pageAboutMe, cardForm,
-  inputImageSrc, profileForm, cardsContainer, formList, formConfig,
-  defaultCards}
+export { profile, profileFormBtn, cardFormBtn, profileFormPopup, cardFormPopup,
+  displayCard, inputImageTitle, inputProfileName, pageProfileName, inputAboutMe,
+  pageAboutMe, cardForm, inputImageSrc, profileForm, cardsContainer,
+  formList, formConfig, defaultCards}
