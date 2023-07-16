@@ -1,56 +1,42 @@
-import { profile, profileFormBtn, cardFormBtn, profileFormPopup, cardFormPopup,
-  inputImageTitle,inputProfileName, pageProfileName, inputAboutMe,
+import {
+  profile, profileFormPopup, cardFormPopup,
+  inputImageTitle, inputProfileName, pageProfileName, inputAboutMe,
   pageAboutMe, cardForm, inputImageSrc, profileForm, cardsContainer,
-  formList, formConfig, defaultCards}
-from './index.js';
-import Card from './card.js';
-import FormValidator from './formValidator.js';
+  } from './constants.js';
+import Card from '../components/Card.js';
 
-defaultCards.forEach( defaultCard => {
-  const card = new Card(defaultCard, '#cards');
-  cardsContainer.append(card.renderCard())
-})
-
-formList.forEach(formElement => {
-  const form = new FormValidator(formConfig, formElement);
-  form.enableValidation()
-})
-
-profileFormBtn.addEventListener("click", function handleProfileFormOpen() {
+function handleProfileFormOpen() {
   profileFormPopup.classList.add("popup_active");
-})
+}
 
-profileForm.addEventListener('submit', function handleProfileFormSubmit() {
+function handleProfileFormSubmit() {
   pageProfileName.textContent = inputProfileName.value;
   pageAboutMe.textContent = inputAboutMe.value;
 
   profileForm.reset();
 
   profileFormPopup.classList.remove("popup_active")
-})
+}
 
-cardFormBtn.addEventListener("click", function handleCardFormOpen() {
+function handleCardFormOpen() {
   cardFormPopup.classList.add("popup_active")
-})
+}
 
-cardForm.addEventListener('submit', function handleCardFormSubmit() {
+function handleCardFormSubmit() {
   const inputCard = {
     name: inputImageTitle.value,
     link: inputImageSrc.value
   }
-
   const card = new Card(inputCard, '#cards');
 
   cardsContainer.prepend(card.renderCard());
-
   cardForm.reset();
-
   cardFormPopup.classList.remove("popup_active");
-});
+}
 
 const closeModal = modalElement => {
   modalElement.classList.remove('popup_active');
-};
+}
 
 const clearContent = modalElement => {
   setTimeout(() => {
@@ -91,4 +77,5 @@ function setCloseEventListeners() {
   })
 }
 
-setCloseEventListeners()
+export {handleProfileFormOpen, handleProfileFormSubmit, handleCardFormOpen,
+  handleCardFormSubmit, setCloseEventListeners};
