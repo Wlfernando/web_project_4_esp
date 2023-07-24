@@ -1,9 +1,10 @@
 import {displayCard} from '../utils/constants.js';
 
 export default class Card {
-  constructor({name, link}, selector){
+  constructor({name, link, isOwner = false}, selector){
     this._name = name;
     this._link = link;
+    this.isOwner = isOwner;
     this._selector = selector
   }
 

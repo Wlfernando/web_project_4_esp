@@ -25,7 +25,8 @@ function handleCardFormOpen() {
 function handleCardFormSubmit() {
   const inputCard = {
     name: inputImageTitle.value,
-    link: inputImageSrc.value
+    link: inputImageSrc.value,
+    isOwner: true
   }
   const card = new Card(inputCard, '#cards');
 

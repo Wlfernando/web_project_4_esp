@@ -2,6 +2,7 @@ import{
   cardsContainer, defaultCards, formList, formConfig, profileFormBtn,
   profileForm, cardFormBtn, cardForm
 } from "../scripts/utils/constants.js";
+import Section from '../scripts/components/Section.js';
 import Card from '../scripts/components/Card.js';
 import FormValidator from "../scripts/components/FormValidator.js";
 import {
@@ -9,16 +10,21 @@ import {
   handleCardFormSubmit, setCloseEventListeners
 } from '../scripts/utils/utils.js';
 
-defaultCards.forEach( defaultCard => {
-  const card = new Card(defaultCard, '#cards');
-  cardsContainer.append(card.renderCard())
-})
+const defaultCardList = new Section ({
+  data: defaultCards,
+  renderer: (item) => {
+    const card = new Card(item, '#cards');
+    const cardElement = card.renderCard();
+    defaultCardList.addItem(cardElement)
+  }
+}, cardsContainer)
 
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);
   form.enableValidation()
 })
 
+defaultCardList.renderItems()
 profileFormBtn.addEventListener('click', handleProfileFormOpen)
 profileForm.addEventListener('submit', handleProfileFormSubmit)
 cardFormBtn.addEventListener('click', handleCardFormOpen)

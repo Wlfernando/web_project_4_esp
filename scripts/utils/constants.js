@@ -14,7 +14,7 @@ const {imageName: inputImageTitle, imageSrc: inputImageSrc} = cardForm.elements;
 const pageProfileName = profile.querySelector('.profile__user-name');
 const pageAboutMe = profile.querySelector('.profile__about-me');
 
-const cardsContainer = document.querySelector('.cards');
+const cardsContainer = '.cards';
 
 const formConfig = {
   formSelector: ".popup__container",
