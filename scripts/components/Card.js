@@ -1,10 +1,9 @@
 import {displayCard} from '../utils/constants.js';
 
 export default class Card {
-  constructor({name, link, isOwner = false}, selector){
+  constructor({name, link}, selector){
     this._name = name;
     this._link = link;
-    this.isOwner = isOwner;
     this._selector = selector
   }
 
@@ -50,7 +49,7 @@ export default class Card {
 
     this._element
       .querySelector('.card__like-button')
-      .addEventListener('click', (e) => this._handleLikeBtn(e));
+      .addEventListener('click', e => this._handleLikeBtn(e));
 
     this._element
       .querySelector('.card__trash-button')
