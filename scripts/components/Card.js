@@ -1,9 +1,8 @@
-import {displayCard} from '../utils/constants.js';
-
 export default class Card {
-  constructor({name, link}, selector){
-    this._name = name;
-    this._link = link;
+  constructor({data, handleCardClick}, selector){
+    this._name = data.name;
+    this._link = data.link;
+    this._handleOpenClick = handleCardClick;
     this._selector = selector
   }
 
@@ -25,15 +24,6 @@ export default class Card {
     return this._element
   }
 
-  _handleOpenPopup() {
-    const displayCardImage = displayCard.querySelector('.popup__image');
-
-    displayCard.querySelector('.popup__title-image').textContent = this._name;
-    displayCardImage.src = this._link;
-    displayCardImage.alt = this._name;
-    displayCard.classList.add("popup_active")
-  }
-
   _handleLikeBtn(e) {
     e.target.classList.toggle('card__like-button_active')
   }
@@ -45,11 +35,13 @@ export default class Card {
   _setEventListeners() {
     this._element
       .querySelector('.card__image')
-      .addEventListener('click', () => this._handleOpenPopup());
+      .addEventListener('click', () => this._handleOpenClick(
+        this._name, this._link)
+      )
 
     this._element
       .querySelector('.card__like-button')
-      .addEventListener('click', e => this._handleLikeBtn(e));
+      .addEventListener('click', e => this._handleLikeBtn(e))
 
     this._element
       .querySelector('.card__trash-button')

@@ -16,10 +16,10 @@ export default class Popup {
   }
 
   _handleClickClose(e) {
-    if (e.target.classList === (
-      'popup__close-btn'
-      || 'popup_active'
-      || 'popup__image-container')) this.close()
+    const clicked = ['popup__close-btn', 'popup__image-container', 'popup_active'];
+    clicked.forEach(click => {
+      if(e.target.classList.contains(click))this.close()
+    })
   }
 
   setEventListeners() {
@@ -29,10 +29,6 @@ export default class Popup {
 
     this._popupSelector.addEventListener(
       'click', e => this._handleClickClose(e)
-    )
-
-    this._popupSelector.addEventListener(
-      'click', () => this.open()
     )
   }
 }
