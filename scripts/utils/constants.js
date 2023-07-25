@@ -14,6 +14,7 @@ const {imageName: inputImageTitle, imageSrc: inputImageSrc} = cardForm.elements;
 const pageProfileName = profile.querySelector('.profile__user-name');
 const pageAboutMe = profile.querySelector('.profile__about-me');
 
+const cardTemplate = '#cards';
 const cardsContainer = '.cards';
 
 const formConfig = {
@@ -52,10 +53,10 @@ const defaultCards = [
   {
     name: "Lago di Braies",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg"
-}
+  }
 ];
 
 export { profile, profileFormBtn, cardFormBtn, profileFormPopup, cardFormPopup,
   displayCard, inputImageTitle, inputProfileName, pageProfileName, inputAboutMe,
   pageAboutMe, cardForm, inputImageSrc, profileForm, cardsContainer,
-  formList, formConfig, defaultCards}
+  formConfig, defaultCards, cardTemplate, formList}
