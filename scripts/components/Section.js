@@ -9,6 +9,10 @@ export default class Section {
     this._container.append(element)
   }
 
+  addItemBegin(element) {
+    this._container.prepend(element)
+  }
+
   clear() {
     this.container.innerHTML = ''
   }

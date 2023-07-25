@@ -1,6 +1,7 @@
 import{
   cardsContainer, defaultCards, formList, formConfig, profileFormBtn,
-  profileForm, cardFormBtn, cardForm, displayCard
+  profileForm, profileFormPopup, cardFormPopup, cardFormBtn, cardForm,
+  displayCard
 } from "../scripts/utils/constants.js";
 import Section from '../scripts/components/Section.js';
 import Card from '../scripts/components/Card.js';
@@ -10,8 +11,9 @@ import {
   handleProfileFormOpen, handleProfileFormSubmit, handleCardFormOpen,
   handleCardFormSubmit, setCloseEventListeners
 } from '../scripts/utils/utils.js';
+import PopupWithForm from "../scripts/components/PopupWithForm.js";
 
-const defaultCardList = new Section ({
+const cardList = new Section ({
   data: defaultCards,
   renderer: (item) => {
     const card = new Card({
@@ -22,18 +24,34 @@ const defaultCardList = new Section ({
         popupWithImage.setEventListeners()
       }}, '#cards');
     const cardElement = card.renderCard();
-    defaultCardList.addItem(cardElement)
+    cardList.addItem(cardElement)
   }
 }, cardsContainer)
+
+const userCardForm = new PopupWithForm ({
+  handleFormSubmit: (input) => {
+    const card = new Card ({
+      data: input,
+      handleCardClick: (name, link)=> {
+        const popupWithImage = new PopupWithImage(displayCard);
+        popupWithImage.open(name, link);
+        popupWithImage.setEventListeners()
+      }
+    }, '#cards')
+    const cardElement = card.renderCard();
+    cardList.addItemBegin(cardElement)
+  }
+}, cardFormPopup)
 
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);
   form.enableValidation()
 })
 
-defaultCardList.renderItems()
+cardList.renderItems()
+userCardForm.setEventListeners()
 profileFormBtn.addEventListener('click', handleProfileFormOpen)
 profileForm.addEventListener('submit', handleProfileFormSubmit)
-cardFormBtn.addEventListener('click', handleCardFormOpen)
-cardForm.addEventListener('submit', handleCardFormSubmit)
+cardFormBtn.addEventListener('click', () => userCardForm.open())
+// cardFormPopup.addEventListener('submit', handleCardFormSubmit)
 // setCloseEventListeners()
