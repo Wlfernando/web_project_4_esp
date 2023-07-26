@@ -4,31 +4,32 @@ export default class Popup {
   }
 
   open() {
-    this._popupSelector.classList.add('popup_active')
+    this._popupSelector.classList.add('popup_active');
+    this.setEventListeners()
   }
 
   close() {
     this._popupSelector.classList.remove('popup_active')
   }
 
-  _handleEscClose(e) {
-    if (e.key === 'Escape') this.close()
-  }
-
-  _handleClickClose(e) {
-    const clicked = ['popup__close-btn', 'popup__image-container', 'popup_active'];
-    clicked.forEach(click => {
-      if(e.target.classList.contains(click))this.close()
-    })
-  }
-
   setEventListeners() {
+    const functionListener = (e) => {
+      if(e.key === 'Escape'
+      || e.target.classList.contains('popup__close-btn')
+      || e.target.classList.contains('popup__image-container')
+      || e.target.classList.contains('popup_active')){
+        this.close();
+        this._removeKeydownListener = document.removeEventListener('keydown', functionListener);
+        this._removeClickListener = this._popupSelector.removeEventListener('click', functionListener);
+      }
+    }
+
     document.addEventListener(
-      'keydown', e => this._handleEscClose(e)
+      'keydown', functionListener
     )
 
     this._popupSelector.addEventListener(
-      'click', e => this._handleClickClose(e)
+      'click', functionListener
     )
   }
 }

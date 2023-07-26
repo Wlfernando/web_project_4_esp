@@ -17,7 +17,6 @@ const cardList = new Section ({
       handleCardClick: (name, link)=> {
         const popupWithImage = new PopupWithImage(displayCard);
         popupWithImage.open(name, link);
-        popupWithImage.setEventListeners()
       }}, cardTemplate);
     const cardElement = card.renderCard();
     cardList.addItem(cardElement)
@@ -31,7 +30,6 @@ const userCardForm = new PopupWithForm ({
       handleCardClick: (name, link)=> {
         const popupWithImage = new PopupWithImage(displayCard);
         popupWithImage.open(name, link);
-        popupWithImage.setEventListeners()
       }
     }, cardTemplate)
     const cardElement = card.renderCard();
@@ -59,6 +57,4 @@ formList.forEach(formElement => {
 
 cardList.renderItems()
 profileFormBtn.addEventListener('click', () => userInfoForm.open())
-userInfoForm.setEventListeners()
 cardFormBtn.addEventListener('click', () => userCardForm.open())
-userCardForm.setEventListeners()
