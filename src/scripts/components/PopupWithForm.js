@@ -22,12 +22,12 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     const rmEventListeners = () => {
-      document.removeEventListener('keydown', functionListener);
-      this._popupSelector.removeEventListener('click', functionListener);
-      this._popupSelector.removeEventListener('submit', functionListener)
+      document.removeEventListener('keydown', enableListener);
+      this._popupSelector.removeEventListener('click', enableListener);
+      this._popupSelector.removeEventListener('submit', enableListener)
     }
 
-    const functionListener = (e) => {
+    const enableListener = (e) => {
     if(e.key === 'Escape'
       || e.target.classList.contains('popup__close-btn')
       || e.target.classList.contains('popup__image-container')
@@ -44,15 +44,15 @@ export default class PopupWithForm extends Popup {
     }
 
     document.addEventListener(
-      'keydown', functionListener
+      'keydown', enableListener
     )
 
     this._popupSelector.addEventListener(
-      'click', functionListener
+      'click', enableListener
     )
 
     this._popupSelector.addEventListener(
-      'submit', functionListener
+      'submit', enableListener
     )
   }
 }

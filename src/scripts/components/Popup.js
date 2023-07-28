@@ -13,23 +13,23 @@ export default class Popup {
   }
 
   setEventListeners() {
-    const functionListener = (e) => {
+    const enableListener = (e) => {
       if(e.key === 'Escape'
       || e.target.classList.contains('popup__close-btn')
       || e.target.classList.contains('popup__image-container')
       || e.target.classList.contains('popup_active')){
         this.close();
-        this._removeKeydownListener = document.removeEventListener('keydown', functionListener);
-        this._removeClickListener = this._popupSelector.removeEventListener('click', functionListener);
+        this._removeKeydownListener = document.removeEventListener('keydown', enableListener);
+        this._removeClickListener = this._popupSelector.removeEventListener('click', enableListener);
       }
     }
 
     document.addEventListener(
-      'keydown', functionListener
+      'keydown', enableListener
     )
 
     this._popupSelector.addEventListener(
-      'click', functionListener
+      'click', enableListener
     )
   }
 }
