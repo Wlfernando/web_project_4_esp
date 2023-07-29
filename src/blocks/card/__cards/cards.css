@@ -5,7 +5,7 @@
           padding-inline-start: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center; /* space-evenly */
   align-content: flex-start;
   gap: 20px 17px;
 }
