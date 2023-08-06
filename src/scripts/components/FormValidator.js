@@ -8,7 +8,7 @@ export default class FormValidator {
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
 
-    this._form = formElement
+    this._formElement = formElement
   }
 
   _showInputError(fieldset, inputElement, errorMessage) {
@@ -71,7 +71,7 @@ export default class FormValidator {
   }
 
   enableValidation() {
-    const form = this._form;
+    const form = this._formElement;
     const fieldsetList = Array.from(form.querySelectorAll(this._formFieldSet));
 
     fieldsetList.forEach(fieldset => {

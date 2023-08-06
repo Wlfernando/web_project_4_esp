@@ -12,10 +12,10 @@ import './pages/index.css';
 
 const cardList = new Section ({
   data: defaultCards,
-  deliver: (item) => {
+  renderer: (item) => {
     const card = new Card({
       data: item,
-      addressCardClick: (name, link)=> {
+      handleOpenClick: (name, link)=> {
         const popupWithImage = new PopupWithImage(displayCard);
         popupWithImage.open(name, link);
       }}, cardTemplate);
@@ -25,10 +25,10 @@ const cardList = new Section ({
 }, cardsContainer)
 
 const userCardForm = new PopupWithForm ({
-  addressFormSubmit: (input) => {
+  handleFormSubmit: (input) => {
     const card = new Card ({
       data: input,
-      addressCardClick: (name, link)=> {
+      handleOpenClick: (name, link)=> {
         const popupWithImage = new PopupWithImage(displayCard);
         popupWithImage.open(name, link);
       }
@@ -39,7 +39,7 @@ const userCardForm = new PopupWithForm ({
 }, cardFormPopup)
 
 const userInfoForm = new PopupWithForm({
-  addressFormSubmit: (input) => {
+  handleFormSubmit: (input) => {
     const user = new UserInfo (input);
     user.setUserInfo();
     const userInput = ({nameUser, jobUser}) => {
@@ -47,7 +47,7 @@ const userInfoForm = new PopupWithForm({
       profileName.value = nameUser;
       aboutMe.value = jobUser
     }
-    setTimeout(() => userInput(user.getUserInfo()), 1)
+    setTimeout(() => userInput(user.getUserInfo()))
   }
 }, profileFormPopup)
 

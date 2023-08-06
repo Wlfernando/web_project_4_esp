@@ -1,9 +1,9 @@
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
-  constructor({addressFormSubmit}, selector) {
-    super(selector);
-    this._handleFormSubmit = addressFormSubmit;
+  constructor({handleFormSubmit}, popupSelector) {
+    super(popupSelector);
+    this._handleFormSubmit = handleFormSubmit;
     this._form = this._popupSelector.querySelector('.popup__container');
   }
 
@@ -35,11 +35,10 @@ export default class PopupWithForm extends Popup {
         this.close();
         rmEventListeners()
 
-      } else if(e.key === 'Enter'
-      || e.target.classList.contains('popup__save-btn')) {
+      } else if(e.target.classList.contains('popup__save-btn')) {
         this._handleFormSubmit(this._getInputValues());
-        this.close()
-        rmEventListeners();
+        this.close();
+        rmEventListeners()
       }
     }
 
