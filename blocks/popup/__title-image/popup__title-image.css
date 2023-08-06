@@ -1,9 +1,0 @@
-.popup__title-image {
-  width: minmax(280px, 90%);
-  justify-self: start;
-  color: #fff;
-  font-size: 12px;
-  line-height: 1.2;
-  font-weight: 400;
-  grid-row: 3;
-}
