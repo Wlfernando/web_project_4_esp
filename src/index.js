@@ -47,7 +47,7 @@ const userInfoForm = new PopupWithForm({
       profileName.value = nameUser;
       aboutMe.value = jobUser
     }
-    setTimeout(() => userInput(user.getUserInfo()))
+    setTimeout(userInput, 0, user.getUserInfo())
   }
 }, profileFormPopup)
 
