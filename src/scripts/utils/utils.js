@@ -77,5 +77,15 @@ function setCloseEventListeners() {
   })
 }
 
-export {handleProfileFormOpen, handleProfileFormSubmit, handleCardFormOpen,
-  handleCardFormSubmit, setCloseEventListeners};
+function test() {
+  fetch('https://around.nomoreparties.co/v1/web_es_07/users/me',{
+    headers: {
+      "Content-Type": "application/json",
+      "authorization": "4f0ec2d8-0a82-401b-be94-8d93fd8bc4fc"
+    }
+  })
+    .then(res => res.json())
+    .then(data => console.dir(data))
+}
+
+export {test};

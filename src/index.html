@@ -17,9 +17,9 @@
         <section class="profile">
           <div class="profile__avatar"></div>
           <div class="profile__info">
-            <p class="profile__user-name">Jacques Cousteau</p>
+            <p class="profile__user-name"></p>
             <button class="button profile__edit-button"></button>
-            <p class="profile__about-me">Explorador</p>
+            <p class="profile__about-me"></p>
           </div>
           <div class="popup">
             <form class="popup__container profile-form" name="profileForm" novalidate>
@@ -29,10 +29,10 @@
                   class="popup__item"
                   type="text"
                   id="profile-name"
-                  name="profileName"
-                  required
-                  value="Jacques Cousteau"
+                  name="name"
+                  value=""
                   placeholder="Nombre"
+                  required
                   minlength="2"
                   maxlength="40"
                 />
@@ -41,8 +41,8 @@
                   class="popup__item"
                   type="text"
                   id="about-me"
-                  name="aboutMe"
-                  value="Explorador"
+                  name="about"
+                  value=""
                   placeholder="Acerca de mí"
                   required
                   minlength="2"
