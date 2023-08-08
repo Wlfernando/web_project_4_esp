@@ -23,10 +23,7 @@ api.getUserData()
   .then(object => {
     const user = new UserInfo(object);
     user.setUserInfo();
-    user.setAvatar()
-    return user
-  })
-  .then(user => {
+    user.setAvatar();
     profileFormBtn.onclick = () => {
       const {name, about} = document.forms.profileForm.elements;
       userInfoForm.open();
@@ -34,38 +31,6 @@ api.getUserData()
       about.value = user.getUserInfo().about
     }
   })
-
-api.getInitialCards()
-  .then(array => {
-    const cardListInit = new Section ({
-      data: array,
-      renderer: (item) => {
-        const card = new Card({
-          data: item,
-          handleOpenClick: (name, link)=> {
-            const popupWithImage = new PopupWithImage(displayCard);
-            popupWithImage.open(name, link);
-          }}, cardTemplate);
-        const cardElement = card.renderCard();
-        cardListInit.addItem(cardElement)
-      }
-    }, cardsContainer)
-    cardListInit.renderItems()
-  })
-
-const userCardForm = new PopupWithForm ({
-  handleFormSubmit: (input) => {
-    const card = new Card ({
-      data: input,
-      handleOpenClick: (name, link)=> {
-        const popupWithImage = new PopupWithImage(displayCard);
-        popupWithImage.open(name, link);
-      }
-    }, cardTemplate)
-    const cardElement = card.renderCard();
-    cardList.addItemBegin(cardElement)
-  }
-}, cardFormPopup)
 
 const userInfoForm = new PopupWithForm({
   handleFormSubmit: (input) => {
@@ -83,10 +48,45 @@ const userInfoForm = new PopupWithForm({
   }
 }, profileFormPopup)
 
+api.getInitialCards()
+  .then(array => {
+    const cardList = new Section ({
+      data: array,
+      renderer: (item) => {
+        const card = new Card({
+          data: item,
+          handleOpenClick: (name, link)=> {
+            const popupWithImage = new PopupWithImage(displayCard);
+            popupWithImage.open(name, link);
+          }}, cardTemplate);
+        const cardElement = card.renderCard();
+        cardList.addItem(cardElement)
+      }
+    }, cardsContainer)
+    cardList.renderItems()
+
+    const userCardForm = new PopupWithForm ({
+      handleFormSubmit: (input) => {
+        api.postCard(input)
+          .then(() => {
+            const card = new Card ({
+              data: input,
+              handleOpenClick: (name, link)=> {
+                const popupWithImage = new PopupWithImage(displayCard);
+                popupWithImage.open(name, link);
+              }
+            }, cardTemplate)
+            const cardElement = card.renderCard();
+            cardList.addItem(cardElement, 'prepend')
+          })
+      }
+    }, cardFormPopup)
+
+    cardFormBtn.addEventListener('click', () => userCardForm.open())
+  })
+
+
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);
   form.enableValidation()
 })
-
-// profileFormBtn.addEventListener('click', () => userInfoForm.open())
-cardFormBtn.addEventListener('click', () => userCardForm.open())

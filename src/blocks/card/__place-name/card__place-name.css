@@ -1,6 +1,5 @@
 .card__place-name {
   width: 80%;
-  color: black;
   align-self: center;
   text-overflow: ellipsis;
   white-space: nowrap;

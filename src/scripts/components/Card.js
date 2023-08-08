@@ -3,7 +3,7 @@ export default class Card {
     this._likes = data.likes;
     this._name = data.name;
     this._link = data.link;
-    this._owner = data.owner
+    this._owner = data.owner;
     this._handleOpenClick = handleOpenClick;
     this._selector = selector
   }
@@ -22,8 +22,13 @@ export default class Card {
     cardImage.src = this._link;
     cardImage.alt = this._name;
     this._element.querySelector('.card__place-name').textContent = this._name;
+    this._showNumberLikes()
 
     return this._element
+  }
+
+  _showNumberLikes() {
+    this._element.querySelector('.card__likes-count').textContent = this._likes.length || undefined
   }
 
   _handleLikeBtn(e) {

@@ -1,0 +1,11 @@
+.card__likes {
+  width: 52px;
+  height: 79px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
