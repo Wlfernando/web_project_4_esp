@@ -40,6 +40,7 @@
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/_active/popup_active.css);
 @import url(../blocks/button/_inactive/button_inactive.css);
+@import url(../blocks/popup/__delete-form/popup__delete-form.css);
 
 @import url(../blocks/card/__cards/cards.css);
 @import url(../blocks/card/card.css);

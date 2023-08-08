@@ -1,5 +1,5 @@
 import{
-  cardsContainer, formList, formConfig, profileFormBtn, profile,
+  cardsContainer, formList, formConfig, profileFormBtn, deleteForm,
   profileFormPopup, cardFormPopup, cardFormBtn, displayCard, cardTemplate
 } from "./scripts/utils/constants.js";
 import Section from './scripts/components/Section.js';
@@ -58,7 +58,16 @@ api.getInitialCards()
           handleOpenClick: (name, link)=> {
             const popupWithImage = new PopupWithImage(displayCard);
             popupWithImage.open(name, link);
-          }}, cardTemplate);
+          },
+          handleDeleteClick: () => {
+            const DltForm = new PopupWithForm({
+              handleFormSubmit: () => {
+                console.log('Hola')
+              }
+            }, deleteForm)
+            DltForm.open()
+          }
+        }, cardTemplate);
         const cardElement = card.renderCard();
         cardList.addItem(cardElement)
       }
@@ -71,9 +80,17 @@ api.getInitialCards()
           .then(() => {
             const card = new Card ({
               data: input,
-              handleOpenClick: (name, link)=> {
+              handleOpenClick: (name, link) => {
                 const popupWithImage = new PopupWithImage(displayCard);
                 popupWithImage.open(name, link);
+              },
+              handleDeleteClick: () => {
+                const DltForm = new PopupWithForm({
+                  handleFormSubmit: () => {
+                    console.log('Hola')
+                  }
+                }, deleteForm)
+                DltForm.open()
               }
             }, cardTemplate)
             const cardElement = card.renderCard();
@@ -84,7 +101,6 @@ api.getInitialCards()
 
     cardFormBtn.addEventListener('click', () => userCardForm.open())
   })
-
 
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);

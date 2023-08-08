@@ -1,6 +1,6 @@
 export default class Popup {
   constructor(popupSelector) {
-    this._popupSelector = popupSelector; // en lo personal me trae más confusión que ambigüedad pero acepto
+    this._popupSelector = popupSelector;
   }
 
   open() {

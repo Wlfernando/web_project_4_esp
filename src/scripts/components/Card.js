@@ -1,10 +1,11 @@
 export default class Card {
-  constructor({data, handleOpenClick}, selector){
+  constructor({data, handleOpenClick, handleDeleteClick}, selector){
     this._likes = data.likes;
     this._name = data.name;
     this._link = data.link;
     this._owner = data.owner;
     this._handleOpenClick = handleOpenClick;
+    this._handleDeleteClick = handleDeleteClick;
     this._selector = selector
   }
 
@@ -36,7 +37,7 @@ export default class Card {
   }
 
   _handleRmBtn() {
-    this._element.closest('.card').remove()
+    // this._element.closest('.card').remove()
   }
 
   _setEventListeners() {
@@ -52,6 +53,6 @@ export default class Card {
 
     this._element
       .querySelector('.card__trash-button')
-      .addEventListener('click', () => this._handleRmBtn())
+      .addEventListener('click', () => this._handleDeleteClick())
   }
 }
