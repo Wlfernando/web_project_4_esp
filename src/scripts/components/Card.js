@@ -28,6 +28,10 @@ export default class Card {
     return this._element
   }
 
+  isOwner(user) {
+    if(this._owner._id !== user._id) this._element.querySelector('.card__trash-button').style.visibility = "hidden"
+  }
+
   _showNumberLikes() {
     this._element.querySelector('.card__likes-count').textContent = this._likes.length || undefined
   }

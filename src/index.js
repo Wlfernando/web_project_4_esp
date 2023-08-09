@@ -49,38 +49,15 @@ const userInfoForm = new PopupWithForm({
 }, profileFormPopup)
 
 api.getInitialCards()
-  .then(array => {
-    const cardList = new Section ({
-      data: array,
-      renderer: (item) => {
-        const card = new Card({
-          data: item,
-          handleOpenClick: (name, link)=> {
-            const popupWithImage = new PopupWithImage(displayCard);
-            popupWithImage.open(name, link);
-          },
-          handleDeleteClick: () => {
-            const DltForm = new PopupWithForm({
-              handleFormSubmit: () => {
-                console.log('Hola')
-              }
-            }, deleteForm)
-            DltForm.open()
-          }
-        }, cardTemplate);
-        const cardElement = card.renderCard();
-        cardList.addItem(cardElement)
-      }
-    }, cardsContainer)
-    cardList.renderItems()
-
-    const userCardForm = new PopupWithForm ({
-      handleFormSubmit: (input) => {
-        api.postCard(input)
-          .then(() => {
-            const card = new Card ({
-              data: input,
-              handleOpenClick: (name, link) => {
+  .then(cards => {
+    api.getUserData()
+      .then((user) =>{
+        const cardList = new Section ({
+          data: cards,
+          renderer: (item) => {
+            const card = new Card({
+              data: item,
+              handleOpenClick: (name, link)=> {
                 const popupWithImage = new PopupWithImage(displayCard);
                 popupWithImage.open(name, link);
               },
@@ -92,14 +69,41 @@ api.getInitialCards()
                 }, deleteForm)
                 DltForm.open()
               }
-            }, cardTemplate)
+            }, cardTemplate);
             const cardElement = card.renderCard();
-            cardList.addItem(cardElement, 'prepend')
-          })
-      }
-    }, cardFormPopup)
+            cardList.addItem(cardElement)
+            card.isOwner(user)
+          }
+        }, cardsContainer)
+        cardList.renderItems()
 
-    cardFormBtn.addEventListener('click', () => userCardForm.open())
+        const userCardForm = new PopupWithForm ({
+          handleFormSubmit: (input) => {
+            api.postCard(input)
+              .then(() => {
+                const card = new Card ({
+                  data: input,
+                  handleOpenClick: (name, link) => {
+                    const popupWithImage = new PopupWithImage(displayCard);
+                    popupWithImage.open(name, link);
+                  },
+                  handleDeleteClick: () => {
+                    const DltForm = new PopupWithForm({
+                      handleFormSubmit: () => {
+                        console.log('Hola')
+                      }
+                    }, deleteForm)
+                    DltForm.open()
+                  }
+                }, cardTemplate)
+                const cardElement = card.renderCard();
+                cardList.addItem(cardElement, 'prepend')
+              })
+          }
+        }, cardFormPopup)
+
+        cardFormBtn.addEventListener('click', () => userCardForm.open())
+      })
   })
 
 formList.forEach(formElement => {
