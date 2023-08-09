@@ -64,7 +64,8 @@ api.getInitialCards()
               handleDeleteClick: () => {
                 const DltForm = new PopupWithForm({
                   handleFormSubmit: () => {
-                    console.log('Hola')
+                    api.rmCard(card.id)
+                      .then(card.handleRemover())
                   }
                 }, deleteForm)
                 DltForm.open()

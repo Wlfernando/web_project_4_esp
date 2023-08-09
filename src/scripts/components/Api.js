@@ -60,4 +60,13 @@ export default class Api {
       })
     })
   }
+
+  rmCard(card) {
+    return fetch(`${this._baseUrl}/web_es_07/cards/${card}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+  }
 }

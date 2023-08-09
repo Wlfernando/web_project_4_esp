@@ -1,9 +1,10 @@
 export default class Card {
   constructor({data, handleOpenClick, handleDeleteClick}, selector){
-    this._likes = data.likes;
+    this._likes = data.likes ?? [];
     this._name = data.name;
     this._link = data.link;
     this._owner = data.owner;
+    this.id = data._id;
     this._handleOpenClick = handleOpenClick;
     this._handleDeleteClick = handleDeleteClick;
     this._selector = selector
@@ -40,8 +41,8 @@ export default class Card {
     e.target.classList.toggle('card__like-button_active')
   }
 
-  _handleRmBtn() {
-    // this._element.closest('.card').remove()
+  handleRemover() {
+    this._element.closest('.card').remove()
   }
 
   _setEventListeners() {
