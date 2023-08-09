@@ -37,7 +37,7 @@ export default class Api {
     })
   }
 
-  getInitialCards() {
+  getCards() {
     return fetch(this._baseUrl + this._cards, {
       method: 'GET',
       headers: {

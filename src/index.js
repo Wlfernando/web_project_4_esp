@@ -20,46 +20,19 @@ const api = new Api({
 })
 
 api.getUserData()
-  .then(object => {
-    const user = new UserInfo(object);
-    user.setUserInfo();
-    user.setAvatar();
-    profileFormBtn.onclick = () => {
-      const {name, about} = document.forms.profileForm.elements;
-      userInfoForm.open();
-      name.value = user.getUserInfo().name;
-      about.value = user.getUserInfo().about
-    }
-  })
+  .then(userData => {
+    const user = new UserInfo(userData);
+    const popupWithImage = new PopupWithImage(displayCard);
 
-const userInfoForm = new PopupWithForm({
-  handleFormSubmit: (input) => {
-    api.sendUserForm(input)
-      .then(()=>{
-        const userEdited = new UserInfo(input)
-        userEdited.setUserInfo()
-        profileFormBtn.onclick = () => {
-          const {name, about} = document.forms.profileForm.elements;
-          userInfoForm.open();
-          name.value = userEdited.getUserInfo().name;
-          about.value = userEdited.getUserInfo().about
-        }
-      })
-  }
-}, profileFormPopup)
-
-api.getInitialCards()
-  .then(cards => {
-    api.getUserData()
-      .then((user) =>{
+    api.getCards()
+      .then(cards => {
         const cardList = new Section ({
           data: cards,
           renderer: (item) => {
             const card = new Card({
               data: item,
               handleOpenClick: (name, link)=> {
-                const popupWithImage = new PopupWithImage(displayCard);
-                popupWithImage.open(name, link);
+                popupWithImage.open(name, link)
               },
               handleDeleteClick: () => {
                 const DltForm = new PopupWithForm({
@@ -73,7 +46,7 @@ api.getInitialCards()
             }, cardTemplate);
             const cardElement = card.renderCard();
             cardList.addItem(cardElement)
-            card.isOwner(user)
+            card.isOwner(userData)
           }
         }, cardsContainer)
         cardList.renderItems()
@@ -82,30 +55,59 @@ api.getInitialCards()
           handleFormSubmit: (input) => {
             api.postCard(input)
               .then(() => {
-                const card = new Card ({
-                  data: input,
-                  handleOpenClick: (name, link) => {
-                    const popupWithImage = new PopupWithImage(displayCard);
-                    popupWithImage.open(name, link);
-                  },
-                  handleDeleteClick: () => {
-                    const DltForm = new PopupWithForm({
-                      handleFormSubmit: () => {
-                        console.log('Hola')
+                api.getCards()
+                  .then(obtainedCard => {
+                    const card = new Card ({
+                      data: obtainedCard[0],
+                      handleOpenClick: (name, link) => {;
+                        popupWithImage.open(name, link);
+                      },
+                      handleDeleteClick: () => {
+                        const DltForm = new PopupWithForm({
+                          handleFormSubmit: () => {
+                            api.rmCard(card.id)
+                            .then(card.handleRemover())
+                          }
+                        }, deleteForm)
+                        DltForm.open()
                       }
-                    }, deleteForm)
-                    DltForm.open()
-                  }
-                }, cardTemplate)
-                const cardElement = card.renderCard();
-                cardList.addItem(cardElement, 'prepend')
+                    }, cardTemplate)
+                    const cardElement = card.renderCard();
+                    cardList.addItem(cardElement, 'prepend')
+                  })
               })
           }
         }, cardFormPopup)
 
-        cardFormBtn.addEventListener('click', () => userCardForm.open())
+        profileFormBtn.onclick = () => {
+          const {name, about} = document.forms.profileForm.elements;
+          userInfoForm.open();
+          name.value = user.getUserInfo().name;
+          about.value = user.getUserInfo().about
+        }
+
+        cardFormBtn.onclick = () => userCardForm.open()
+
+        user.setUserInfo();
+        user.setAvatar();
       })
   })
+
+const userInfoForm = new PopupWithForm({
+  handleFormSubmit: (input) => {
+    api.sendUserForm(input)
+      .then(() => {
+        const editedUser = new UserInfo(input)
+        editedUser.setUserInfo()
+        profileFormBtn.onclick = () => {
+          const {name, about} = document.forms.profileForm.elements;
+          userInfoForm.open();
+          name.value = editedUser.getUserInfo().name;
+          about.value = editedUser.getUserInfo().about
+        }
+      })
+  }
+}, profileFormPopup)
 
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);
