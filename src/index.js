@@ -144,9 +144,6 @@ api.getUserData()
     }
   }, avatarPopup)
 
-  console.dir(avatar)
-  console.log(avatarPopup)
-
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);
   form.enableValidation()

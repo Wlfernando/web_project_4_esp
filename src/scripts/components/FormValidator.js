@@ -59,7 +59,7 @@ export default class FormValidator {
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      setTimeout(() => this._toggleButtonState(inputList, buttonElement), 200);
+      this._toggleButtonState(inputList, buttonElement);
     })
 
     inputList.forEach(inputElement => {

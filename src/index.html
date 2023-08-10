@@ -149,10 +149,7 @@
           </form>
         </div>
         <div class="popup">
-          <form
-            class="popup__container popup__avatar-form"
-            name="avatarForm"
-          >
+          <form class="popup__container popup__avatar-form" name="avatarForm" novalidate>
             <fieldset class="popup__content">
               <h3 class="popup__title">Cambiar foto de perfil</h3>
               <input
@@ -165,7 +162,11 @@
                 placeholder="Enlace del avatar"
               />
               <span class="popup__item-error avatar-error"></span>
-              <button type="submit" class="button popup__save-btn">
+              <button
+                type="submit"
+                class="button popup__save-btn"
+                name="saveBtn"
+              >
                 Guardar
               </button>
             </fieldset>
