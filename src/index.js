@@ -55,8 +55,7 @@ api.getUserData()
               }
             }, cardTemplate);
             const cardElement = card.renderCard();
-            card.isOwner(userData)
-            card.isLiked(userData)
+            card.isVerified(userData)
             cardList.addItem(cardElement)
           }
         }, cardsContainer)
@@ -106,10 +105,7 @@ api.getUserData()
           about.value = user.getUserInfo().about
         }
 
-        avatar.onclick = () => {
-          avatarForm.open();
-          avatar.src = user.getUserInfo().avatar;
-        }
+        avatar.onclick = () => avatarForm.open()
 
         cardFormBtn.onclick = () => userCardForm.open()
 

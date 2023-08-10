@@ -30,11 +30,20 @@ export default class Card {
     return this._element
   }
 
-  isOwner(user) {
-    if(this._owner._id !== user._id) this._element.querySelector('.card__trash-button').style.visibility = "hidden"
+  isVerified(userData) {
+    this._hasDustbin(userData)
+    this._isLiked(userData)
   }
 
-  isLiked(userData) {
+  _hasDustbin(userData) {
+    if(this._owner._id !== userData._id)
+    this._element
+      .querySelector('.card__trash-button')
+      .style
+      .visibility = "hidden"
+  }
+
+  _isLiked(userData) {
     if(this._likes.find(like => like._id === userData._id)){
       this._element
         .querySelector('.card__like-button')
@@ -44,7 +53,9 @@ export default class Card {
   }
 
   _showNumberLikes() {
-    this._element.querySelector('.card__likes-count').textContent = this._likes.length || undefined
+    this._element
+      .querySelector('.card__likes-count')
+      .textContent = this._likes.length || undefined
   }
 
   _handleLikeBtn(e) {
