@@ -19,8 +19,8 @@ export default class Popup {
       || e.target.classList.contains('popup__image-container')
       || e.target.classList.contains('popup_active')){
         this.close();
-        this._removeKeydownListener = document.removeEventListener('keydown', enableListener);
-        this._removeClickListener = this._popupSelector.removeEventListener('click', enableListener);
+        document.removeEventListener('keydown', enableListener);
+        this._popupSelector.removeEventListener('click', enableListener);
       }
     }
 

@@ -1,12 +1,13 @@
 import{
   cardsContainer, formList, formConfig, profileFormBtn, deleteForm,
   profileFormPopup, cardFormPopup, cardFormBtn, displayCard, cardTemplate,
-  avatarPopup, avatar
+  avatarPopup, avatar, errorPopup
 } from "./scripts/utils/constants.js";
 import Section from './scripts/components/Section.js';
 import Card from './scripts/components/Card.js';
 import PopupWithImage from "./scripts/components/PopupWithImage.js";
 import PopupWithForm from "./scripts/components/PopupWithForm.js";
+import PopupWithError from './scripts/components/PopupWithError.js';
 import UserInfo from "./scripts/components/UserInfo.js";
 import FormValidator from "./scripts/components/FormValidator.js";
 import './pages/index.css';
@@ -20,10 +21,12 @@ const api = new Api({
   }
 })
 
+const errorMessage = new PopupWithError(errorPopup)
+const popupWithImage = new PopupWithImage(displayCard);
+
 api.getUserData()
   .then(userData => {
     const user = new UserInfo(userData);
-    const popupWithImage = new PopupWithImage(displayCard);
 
     api.getCards()
       .then(cards => {
@@ -40,6 +43,7 @@ api.getUserData()
                   handleFormSubmit: () => {
                     api.rmCard(id)
                       .then(card.handleRemover())
+                      .catch(err=> errorMessage.open(err))
                   }
                 }, deleteForm)
                 DltForm.open()
@@ -48,9 +52,11 @@ api.getUserData()
                 if(!likes.find(like => like._id === userData._id)) {
                   api.putLike(id)
                     .then(likes.push(userData))
+                    .catch(err=> errorMessage.open(err))
                 } else {
                   api.rmLike(id)
                     .then(likes.pop())
+                    .catch(err=> errorMessage.open(err))
                 }
               }
             }, cardTemplate);
@@ -77,6 +83,7 @@ api.getUserData()
                           handleFormSubmit: () => {
                             api.rmCard(id)
                             .then(card.handleRemover())
+                            .catch(err=> errorMessage.open(err))
                           }
                         }, deleteForm)
                         DltForm.open()
@@ -84,17 +91,21 @@ api.getUserData()
                       handleLikeClick: (likes, id) => {
                         if(!likes.find(like => like._id === userData._id)) {
                           api.putLike(id)
-                          likes.push(userData)
+                            .then(likes.push(userData))
+                            .catch(err=> errorMessage.open(err))
                         } else {
                           api.rmLike(id)
-                          likes.pop()
+                            .then(likes.pop())
+                            .catch(err=> errorMessage.open(err))
                         }
                       }
                     }, cardTemplate)
                     const cardElement = card.renderCard();
                     cardList.addItem(cardElement, 'prepend')
                   })
+                  .catch(err => errorMessage.open(err))
               })
+                .catch(err=> errorMessage.open(err))
           }
         }, cardFormPopup)
 
@@ -112,33 +123,37 @@ api.getUserData()
         user.setUserInfo();
         user.setAvatar();
       })
+      .catch(err => errorMessage.open(err))
   })
+  .catch(err => errorMessage.open(err))
 
-  const userInfoForm = new PopupWithForm({
-    handleFormSubmit: (input) => {
-      api.sendUserForm(input)
-        .then(() => {
-          const editedUser = new UserInfo(input)
-          editedUser.setUserInfo()
-          profileFormBtn.onclick = () => {
-            const {name, about} = document.forms.profileForm.elements;
-            userInfoForm.open();
-            name.value = editedUser.getUserInfo().name;
-            about.value = editedUser.getUserInfo().about
-          }
-        })
-    }
-  }, profileFormPopup)
+const userInfoForm = new PopupWithForm({
+  handleFormSubmit: (input) => {
+    api.sendUserForm(input)
+      .then(() => {
+        const editedUser = new UserInfo(input)
+        editedUser.setUserInfo()
+        profileFormBtn.onclick = () => {
+          const {name, about} = document.forms.profileForm.elements;
+          userInfoForm.open();
+          name.value = editedUser.getUserInfo().name;
+          about.value = editedUser.getUserInfo().about
+        }
+      })
+      .catch(err=> errorMessage.open(err))
+  }
+}, profileFormPopup)
 
-  const avatarForm = new PopupWithForm({
-    handleFormSubmit: (input) => {
-      api.sendAvatar(input)
-        .then(() => {
-          const editedAvatar = new UserInfo(input)
-          editedAvatar.setAvatar()
-        })
-    }
-  }, avatarPopup)
+const avatarForm = new PopupWithForm({
+  handleFormSubmit: (input) => {
+    api.sendAvatar(input)
+      .then(() => {
+        const editedAvatar = new UserInfo(input)
+        editedAvatar.setAvatar()
+      })
+      .catch(err=> errorMessage.open(err))
+  }
+}, avatarPopup)
 
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);

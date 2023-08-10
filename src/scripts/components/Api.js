@@ -11,7 +11,13 @@ export default class Api {
     this._contentType = ContentType;
     this._me = '/web_es_07/users/me';
     this._cards = '/web_es_07/cards';
-    this._avatar = '/web_es_07/users/me/avatar'
+    this._avatar = '/web_es_07/users/me/avatar';
+    this._likes = this._cards + '/likes/'
+  }
+
+  _then(res) {
+    if(res.ok) return res.json();
+    return Promise.reject(`Error: ${res.status}.`);
   }
 
   getUserData() {
@@ -21,7 +27,7 @@ export default class Api {
         authorization: this._authorization,
       }
     })
-    .then(res=> res.json())
+      .then(res=> this._then(res))
   }
 
   sendUserForm(data) {
@@ -36,6 +42,7 @@ export default class Api {
         about: data.about
       })
     })
+      .then(res=> this._then(res))
   }
 
   sendAvatar(data) {
@@ -49,6 +56,7 @@ export default class Api {
         avatar: data.avatar,
       })
     })
+      .then(res=> this._then(res))
   }
 
   getCards() {
@@ -58,7 +66,7 @@ export default class Api {
         authorization: this._authorization,
       },
     })
-      .then(res => res.json())
+      .then(res=> this._then(res))
   }
 
   postCard(input) {
@@ -73,6 +81,7 @@ export default class Api {
         link: input.link
       })
     })
+      .then(res=> this._then(res))
   }
 
   rmCard(card) {
@@ -82,23 +91,26 @@ export default class Api {
         authorization: this._authorization
       }
     })
+      .then(res=> this._then(res))
   }
 
   putLike(id) {
-    return fetch(`${this._baseUrl}${this._cards}/likes/${id}`, {
+    return fetch(this._baseUrl + this._likes + id, {
       method: 'PUT',
       headers: {
         authorization: this._authorization
       }
     })
+      .then(res=> this._then(res))
   }
 
   rmLike(id) {
-    return fetch(`${this._baseUrl}${this._cards}/likes/${id}`, {
+    return fetch(this._baseUrl + this._likes + id, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
       }
     })
+      .then(res=> this._then(res))
   }
 }

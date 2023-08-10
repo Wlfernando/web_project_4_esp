@@ -43,6 +43,8 @@
 @import url(../blocks/button/_inactive/button_inactive.css);
 @import url(../blocks/popup/__delete-form/popup__delete-form.css);
 @import url(../blocks/popup/__avatar-form/popup__avatar-form.css);
+@import url(../blocks/popup/__error/popup__error.css);
+@import url(../blocks/popup/__text-error/popup__text-error.css);
 
 @import url(../blocks/card/__cards/cards.css);
 @import url(../blocks/card/card.css);

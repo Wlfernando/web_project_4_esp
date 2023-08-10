@@ -6,14 +6,17 @@ const cardFormBtn = profile.querySelector(".profile__add-button");
 
 // Pop ups
 const popupActive = document.querySelectorAll(".popup");
-const [profileFormPopup, cardFormPopup, displayCard, deleteForm, avatarPopup] = popupActive;
-const forms = document.forms;
-const {profileForm, cardForm} = forms;
-const {profileName: inputProfileName, aboutMe: inputAboutMe} = profileForm.elements;
-const {imageName: inputImageTitle, imageSrc: inputImageSrc} = cardForm.elements;
 
-const pageProfileName = profile.querySelector('.profile__user-name');
-const pageAboutMe = profile.querySelector('.profile__about-me');
+const [
+  profileFormPopup,
+  cardFormPopup,
+  displayCard,
+  deleteForm,
+  avatarPopup,
+  errorPopup
+] = popupActive;
+
+const forms = document.forms;
 
 const cardTemplate = '#cards';
 const cardsContainer = '.cards';
@@ -31,9 +34,7 @@ const formConfig = {
 const formList = Array.from(forms);
 
 export {
-  profile, profileFormBtn, cardFormBtn, profileFormPopup, cardFormPopup,
-  displayCard, inputImageTitle, inputProfileName, pageProfileName, inputAboutMe,
-  pageAboutMe, cardForm, inputImageSrc, profileForm, cardsContainer,
-  formConfig, cardTemplate, formList, deleteForm, avatarPopup,
-  avatar
+  profileFormBtn, cardFormBtn, profileFormPopup, cardFormPopup,
+  displayCard, cardsContainer, formConfig, cardTemplate, formList,
+  deleteForm, avatarPopup, avatar, errorPopup
 }
