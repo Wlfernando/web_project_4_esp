@@ -10,7 +10,8 @@ export default class Api {
     this._authorization = authorization;
     this._contentType = ContentType;
     this._me = '/web_es_07/users/me';
-    this._cards = '/web_es_07/cards'
+    this._cards = '/web_es_07/cards';
+    this._avatar = '/web_es_07/users/me/avatar'
   }
 
   getUserData() {
@@ -33,6 +34,19 @@ export default class Api {
       body: JSON.stringify({
         name: data.name,
         about: data.about
+      })
+    })
+  }
+
+  sendAvatar(data) {
+    return fetch(this._baseUrl + this._avatar, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        "content-Type": this._contentType
+      },
+      body: JSON.stringify({
+        avatar: data.avatar,
       })
     })
   }

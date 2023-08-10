@@ -1,11 +1,12 @@
 // Btns on profile
 const profile = document.querySelector(".profile");
+const avatar = profile.querySelector('.profile__avatar');
 const profileFormBtn = profile.querySelector(".profile__edit-button");
 const cardFormBtn = profile.querySelector(".profile__add-button");
 
 // Pop ups
 const popupActive = document.querySelectorAll(".popup");
-const [profileFormPopup, cardFormPopup, displayCard, deleteForm] = popupActive;
+const [profileFormPopup, cardFormPopup, displayCard, deleteForm, avatarPopup] = popupActive;
 const forms = document.forms;
 const {profileForm, cardForm} = forms;
 const {profileName: inputProfileName, aboutMe: inputAboutMe} = profileForm.elements;
@@ -29,7 +30,10 @@ const formConfig = {
 
 const formList = Array.from(forms);
 
-export { profile, profileFormBtn, cardFormBtn, profileFormPopup, cardFormPopup,
+export {
+  profile, profileFormBtn, cardFormBtn, profileFormPopup, cardFormPopup,
   displayCard, inputImageTitle, inputProfileName, pageProfileName, inputAboutMe,
   pageAboutMe, cardForm, inputImageSrc, profileForm, cardsContainer,
-  formConfig, cardTemplate, formList, deleteForm}
+  formConfig, cardTemplate, formList, deleteForm, avatarPopup,
+  avatar
+}

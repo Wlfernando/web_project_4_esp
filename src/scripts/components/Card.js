@@ -9,7 +9,6 @@ export default class Card {
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
     this._selector = selector
-    console.log(this._likes)
   }
 
   _getTemplate() {
