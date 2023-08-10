@@ -23,9 +23,11 @@ api.getUserData()
   .then(userData => {
     const user = new UserInfo(userData);
     const popupWithImage = new PopupWithImage(displayCard);
+    console.log(userData._id)
 
     api.getCards()
       .then(cards => {
+        console.log(cards)
         const cardList = new Section ({
           data: cards,
           renderer: (item) => {
@@ -34,19 +36,29 @@ api.getUserData()
               handleOpenClick: (name, link)=> {
                 popupWithImage.open(name, link)
               },
-              handleDeleteClick: () => {
+              handleDeleteClick: (id) => {
                 const DltForm = new PopupWithForm({
                   handleFormSubmit: () => {
-                    api.rmCard(card.id)
+                    api.rmCard(id)
                       .then(card.handleRemover())
                   }
                 }, deleteForm)
                 DltForm.open()
+              },
+              handleLikeClick: (likes, id) => {
+                if(!likes.find(like => like._id === userData._id)) {
+                  api.putLike(id)
+                    .then(likes.push(userData))
+                } else {
+                  api.rmLike(id)
+                    .then(likes.pop())
+                }
               }
             }, cardTemplate);
             const cardElement = card.renderCard();
-            cardList.addItem(cardElement)
             card.isOwner(userData)
+            card.isLiked(userData)
+            cardList.addItem(cardElement)
           }
         }, cardsContainer)
         cardList.renderItems()
@@ -62,14 +74,23 @@ api.getUserData()
                       handleOpenClick: (name, link) => {;
                         popupWithImage.open(name, link);
                       },
-                      handleDeleteClick: () => {
+                      handleDeleteClick: (id) => {
                         const DltForm = new PopupWithForm({
                           handleFormSubmit: () => {
-                            api.rmCard(card.id)
+                            api.rmCard(id)
                             .then(card.handleRemover())
                           }
                         }, deleteForm)
                         DltForm.open()
+                      },
+                      handleLikeClick: (likes, id) => {
+                        if(!likes.find(like => like._id === userData._id)) {
+                          api.putLike(id)
+                          likes.push(userData)
+                        } else {
+                          api.rmLike(id)
+                          likes.pop()
+                        }
                       }
                     }, cardTemplate)
                     const cardElement = card.renderCard();
