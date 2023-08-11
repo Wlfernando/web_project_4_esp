@@ -39,14 +39,15 @@ api.getUserData()
                 popupWithImage.open(name, link)
               },
               handleDeleteClick: (id) => {
-                const DltForm = new PopupWithForm({
+                const dltForm = new PopupWithForm({
                   handleFormSubmit: () => {
                     api.rmCard(id)
                       .then(card.handleRemover())
                       .catch(err=> errorMessage.open(err))
+                      .finally(dltForm.close())
                   }
                 }, deleteForm)
-                DltForm.open()
+                dltForm.open()
               },
               handleLikeClick: (likes, id) => {
                 if(!likes.find(like => like._id === userData._id)) {
@@ -79,14 +80,15 @@ api.getUserData()
                         popupWithImage.open(name, link);
                       },
                       handleDeleteClick: (id) => {
-                        const DltForm = new PopupWithForm({
+                        const dltForm = new PopupWithForm({
                           handleFormSubmit: () => {
                             api.rmCard(id)
                             .then(card.handleRemover())
                             .catch(err=> errorMessage.open(err))
+                            .finally(dltForm.close())
                           }
                         }, deleteForm)
-                        DltForm.open()
+                        dltForm.open()
                       },
                       handleLikeClick: (likes, id) => {
                         if(!likes.find(like => like._id === userData._id)) {
@@ -104,6 +106,7 @@ api.getUserData()
                     cardList.addItem(cardElement, 'prepend')
                   })
                   .catch(err => errorMessage.open(err))
+                  .finally(userCardForm.close())
               })
                 .catch(err=> errorMessage.open(err))
           }
@@ -131,14 +134,20 @@ const userInfoForm = new PopupWithForm({
   handleFormSubmit: (input) => {
     api.sendUserForm(input)
       .then(() => {
-        const editedUser = new UserInfo(input)
-        editedUser.setUserInfo()
-        profileFormBtn.onclick = () => {
-          const {name, about} = document.forms.profileForm.elements;
-          userInfoForm.open();
-          name.value = editedUser.getUserInfo().name;
-          about.value = editedUser.getUserInfo().about
-        }
+        api.getUserData()
+          .then(userData=> {
+            const editedUser = new UserInfo(userData)
+            editedUser.setUserInfo()
+            profileFormBtn.onclick = () => {
+              const {name, about} = document.forms.profileForm.elements;
+              userInfoForm.open();
+              name.value = editedUser.getUserInfo().name;
+              about.value = editedUser.getUserInfo().about
+            }
+          })
+          .catch(err => errorMessage.open(err))
+          .finally(userInfoForm.close())
+
       })
       .catch(err=> errorMessage.open(err))
   }
@@ -148,10 +157,16 @@ const avatarForm = new PopupWithForm({
   handleFormSubmit: (input) => {
     api.sendAvatar(input)
       .then(() => {
+        api.getUserData()
+          .then(userData=> {
+            const editedAvatar = new UserInfo(userData)
+            editedAvatar.setAvatar()
+          })
         const editedAvatar = new UserInfo(input)
         editedAvatar.setAvatar()
       })
       .catch(err=> errorMessage.open(err))
+      .finally(avatarForm.close())
   }
 }, avatarPopup)
 

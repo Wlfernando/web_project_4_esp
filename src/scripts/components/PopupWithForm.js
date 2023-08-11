@@ -37,7 +37,6 @@ export default class PopupWithForm extends Popup {
 
       } else if(e.target.classList.contains('popup__save-btn')) {
         this._handleFormSubmit(this._getInputValues());
-        this.close();
         rmEventListeners()
       }
     }
