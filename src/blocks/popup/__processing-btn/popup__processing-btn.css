@@ -1,0 +1,10 @@
+.popup__processing-btn {
+  visibility: hidden;
+  background-color: black;
+  color: white;
+  position: absolute;
+  top: 15px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

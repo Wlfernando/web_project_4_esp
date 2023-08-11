@@ -10,6 +10,19 @@ export default class PopupWithForm extends Popup {
   close() {
     super.close();
     this._form.reset();
+    this._isDone()
+  }
+
+  _isDone() {
+    this._form
+      .querySelector('.popup__processing-btn')
+      .style.visibility = 'hidden'
+  }
+  
+  _process() {
+    this._form
+      .querySelector('.popup__processing-btn')
+      .style.visibility = 'visible'
   }
 
   _getInputValues() {
@@ -38,6 +51,7 @@ export default class PopupWithForm extends Popup {
       } else if(e.target.classList.contains('popup__save-btn')) {
         this._handleFormSubmit(this._getInputValues());
         rmEventListeners()
+        this._process()
       }
     }
 

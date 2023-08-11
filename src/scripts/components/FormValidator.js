@@ -54,12 +54,13 @@ export default class FormValidator {
   _setEventListeners(form, fieldset) {
     const inputList = Array.from(fieldset.querySelectorAll(this._inputSelector));
     const buttonElement = fieldset.querySelector(this._submitButtonSelector);
+    const waitingApi = 1200;
 
     this._toggleButtonState(inputList, buttonElement);
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      setTimeout(()=> this._toggleButtonState(inputList, buttonElement), 1200);
+      setTimeout(()=> this._toggleButtonState(inputList, buttonElement), waitingApi);
     })
 
     inputList.forEach(inputElement => {

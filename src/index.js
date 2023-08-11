@@ -27,9 +27,11 @@ const popupWithImage = new PopupWithImage(displayCard);
 api.getUserData()
   .then(userData => {
     const user = new UserInfo(userData);
+    console.log(userData)
 
     api.getCards()
       .then(cards => {
+        const waitingApi = 250;
         const cardList = new Section ({
           data: cards,
           renderer: (item) => {
@@ -44,7 +46,9 @@ api.getUserData()
                     api.rmCard(id)
                       .then(card.handleRemover())
                       .catch(err=> errorMessage.open(err))
-                      .finally(dltForm.close())
+                      .finally(()=>
+                        setTimeout(dltForm.close(), waitingApi)
+                      )
                   }
                 }, deleteForm)
                 dltForm.open()
@@ -83,9 +87,11 @@ api.getUserData()
                         const dltForm = new PopupWithForm({
                           handleFormSubmit: () => {
                             api.rmCard(id)
-                            .then(card.handleRemover())
-                            .catch(err=> errorMessage.open(err))
-                            .finally(dltForm.close())
+                              .then(card.handleRemover())
+                              .catch(err=> errorMessage.open(err))
+                              .finally(()=>
+                                setTimeout(dltForm.close(), waitingApi)
+                              )
                           }
                         }, deleteForm)
                         dltForm.open()
@@ -161,12 +167,10 @@ const avatarForm = new PopupWithForm({
           .then(userData=> {
             const editedAvatar = new UserInfo(userData)
             editedAvatar.setAvatar()
-          })
-        const editedAvatar = new UserInfo(input)
-        editedAvatar.setAvatar()
+        })
+          .catch(err=> errorMessage.open(err))
+          .finally(avatarForm.close())
       })
-      .catch(err=> errorMessage.open(err))
-      .finally(avatarForm.close())
   }
 }, avatarPopup)
 
