@@ -27,7 +27,6 @@ const popupWithImage = new PopupWithImage(displayCard);
 api.getUserData()
   .then(userData => {
     const user = new UserInfo(userData);
-    console.log(userData)
 
     api.getCards()
       .then(cards => {
