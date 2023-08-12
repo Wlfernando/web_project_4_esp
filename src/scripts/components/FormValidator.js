@@ -11,6 +11,8 @@ export default class FormValidator {
     this._formElement = formElement
   }
 
+  // Hola! Los metodos privados showInputError y hideInputError tienen un comportamiento
+  // definido y previamente se encuentran unificados en el condicional del metodo privado isValid
   _showInputError(fieldset, inputElement, errorMessage) {
     const errorElement = fieldset.querySelector(`.${inputElement.id}-error`);
 

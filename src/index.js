@@ -30,7 +30,6 @@ api.getUserData()
 
     api.getCards()
       .then(cards => {
-        const waitingApi = 250;
         const cardList = new Section ({
           data: cards,
           renderer: (item) => {
@@ -45,9 +44,7 @@ api.getUserData()
                     api.rmCard(id)
                       .then(card.handleRemover())
                       .catch(err=> errorMessage.open(err))
-                      .finally(()=>
-                        setTimeout(dltForm.close(), waitingApi)
-                      )
+                      .finally(()=> dltForm.close())
                   }
                 }, deleteForm)
                 dltForm.open()
@@ -74,46 +71,40 @@ api.getUserData()
         const userCardForm = new PopupWithForm ({
           handleFormSubmit: (input) => {
             api.postCard(input)
-              .then(() => {
-                api.getCards()
-                  .then(obtainedCard => {
-                    const card = new Card ({
-                      data: obtainedCard[0],
-                      handleOpenClick: (name, link) => {;
-                        popupWithImage.open(name, link);
-                      },
-                      handleDeleteClick: (id) => {
-                        const dltForm = new PopupWithForm({
-                          handleFormSubmit: () => {
-                            api.rmCard(id)
-                              .then(card.handleRemover())
-                              .catch(err=> errorMessage.open(err))
-                              .finally(()=>
-                                setTimeout(dltForm.close(), waitingApi)
-                              )
-                          }
-                        }, deleteForm)
-                        dltForm.open()
-                      },
-                      handleLikeClick: (likes, id) => {
-                        if(!likes.find(like => like._id === userData._id)) {
-                          api.putLike(id)
-                            .then(likes.push(userData))
-                            .catch(err=> errorMessage.open(err))
-                        } else {
-                          api.rmLike(id)
-                            .then(likes.pop())
-                            .catch(err=> errorMessage.open(err))
-                        }
+              .then(obtainedCard => {
+                const card = new Card ({
+                  data: obtainedCard[0],
+                  handleOpenClick: (name, link) => {;
+                    popupWithImage.open(name, link);
+                  },
+                  handleDeleteClick: (id) => {
+                    const dltForm = new PopupWithForm({
+                      handleFormSubmit: () => {
+                        api.rmCard(id)
+                          .then(card.handleRemover())
+                          .catch(err=> errorMessage.open(err))
+                          .finally(()=> dltForm.close())
                       }
-                    }, cardTemplate)
-                    const cardElement = card.renderCard();
-                    cardList.addItem(cardElement, 'prepend')
-                  })
-                  .catch(err => errorMessage.open(err))
-                  .finally(userCardForm.close())
+                    }, deleteForm)
+                    dltForm.open()
+                  },
+                  handleLikeClick: (likes, id) => {
+                    if(!likes.find(like => like._id === userData._id)) {
+                      api.putLike(id)
+                        .then(likes.push(userData))
+                        .catch(err=> errorMessage.open(err))
+                    } else {
+                      api.rmLike(id)
+                        .then(likes.pop())
+                        .catch(err=> errorMessage.open(err))
+                    }
+                  }
+                }, cardTemplate)
+                const cardElement = card.renderCard();
+                cardList.addItem(cardElement, 'prepend')
               })
-                .catch(err=> errorMessage.open(err))
+              .catch(err => errorMessage.open(err))
+              .finally(()=> userCardForm.close())
           }
         }, cardFormPopup)
 
@@ -138,38 +129,30 @@ api.getUserData()
 const userInfoForm = new PopupWithForm({
   handleFormSubmit: (input) => {
     api.sendUserForm(input)
-      .then(() => {
-        api.getUserData()
-          .then(userData=> {
-            const editedUser = new UserInfo(userData)
-            editedUser.setUserInfo()
-            profileFormBtn.onclick = () => {
-              const {name, about} = document.forms.profileForm.elements;
-              userInfoForm.open();
-              name.value = editedUser.getUserInfo().name;
-              about.value = editedUser.getUserInfo().about
-            }
-          })
-          .catch(err => errorMessage.open(err))
-          .finally(userInfoForm.close())
-
+      .then(userData=> {
+        const editedUser = new UserInfo(userData)
+        editedUser.setUserInfo()
+        profileFormBtn.onclick = () => {
+          const {name, about} = document.forms.profileForm.elements;
+          userInfoForm.open();
+          name.value = editedUser.getUserInfo().name;
+          about.value = editedUser.getUserInfo().about
+        }
       })
-      .catch(err=> errorMessage.open(err))
+      .catch(err => errorMessage.open(err))
+      .finally(()=> userInfoForm.close())
   }
 }, profileFormPopup)
 
 const avatarForm = new PopupWithForm({
   handleFormSubmit: (input) => {
     api.sendAvatar(input)
-      .then(() => {
-        api.getUserData()
-          .then(userData=> {
-            const editedAvatar = new UserInfo(userData)
-            editedAvatar.setAvatar()
-        })
-          .catch(err=> errorMessage.open(err))
-          .finally(avatarForm.close())
-      })
+      .then(userData=> {
+        const editedAvatar = new UserInfo(userData)
+        editedAvatar.setAvatar()
+    })
+      .catch(err=> errorMessage.open(err))
+      .finally(()=> avatarForm.close())
   }
 }, avatarPopup)
 

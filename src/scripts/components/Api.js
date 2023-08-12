@@ -15,6 +15,7 @@ export default class Api {
     this._likes = this._cards + '/likes/'
   }
 
+  // hice el cambio
   _then(res) {
     if(res.ok) return res.json();
     return Promise.reject(`Error: ${res.status}.`);
@@ -42,7 +43,7 @@ export default class Api {
         about: data.about
       })
     })
-      .then(res=> this._then(res))
+      .then(()=> this.getUserData())
   }
 
   sendAvatar(data) {
@@ -56,7 +57,7 @@ export default class Api {
         avatar: data.avatar,
       })
     })
-      .then(res=> this._then(res))
+      .then(()=> this.getUserData())
   }
 
   getCards() {
@@ -81,7 +82,7 @@ export default class Api {
         link: input.link
       })
     })
-      .then(res=> this._then(res))
+      .then(()=> this.getCards())
   }
 
   rmCard(card) {
