@@ -44,7 +44,7 @@ export default class Card {
   }
 
   _isLiked(userData) {
-    if(this._likes.find(like => like._id === userData._id)){
+    if(this._likes.some(like => like._id === userData._id)){
       this._element
         .querySelector('.card__like-button')
         .classList

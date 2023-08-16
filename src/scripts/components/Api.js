@@ -11,7 +11,6 @@ export default class Api {
     this._contentType = ContentType;
   }
 
-  // Gracias por la explicación e insistencia, espero ahora aproximarme con el resultado
   do(action, endPoint, id = null) {
     const url = id
       ? this._baseUrl + endPoint + '/' + id

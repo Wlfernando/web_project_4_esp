@@ -14,10 +14,9 @@ export default class Popup {
 
   setEventListeners() {
     const enableListener = (e) => {
+      const clicks = ['popup__close-btn', 'popup__image-container', 'popup_active']
       if(e.key === 'Escape'
-      || e.target.classList.contains('popup__close-btn')
-      || e.target.classList.contains('popup__image-container')
-      || e.target.classList.contains('popup_active')){
+      || clicks.some(click=> e.target.classList.contains(click))){
         this.close();
         document.removeEventListener('keydown', enableListener);
         this._popupSelector.removeEventListener('click', enableListener);

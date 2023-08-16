@@ -57,7 +57,7 @@ api.do('GET', api.me)
                 dltForm.open()
               },
               handleLikeClick: (likes, id) => {
-                if(!likes.find(like => like._id === userData._id)) {
+                if(!likes.some(like => like._id === userData._id)) {
                   api.do('PUT', api.likes, id)
                     .then(likes.push(userData))
                     .catch(err=> errorMessage.open(err))
@@ -78,9 +78,9 @@ api.do('GET', api.me)
         const cardForm = new PopupWithForm ({
           handleFormSubmit: (input) => {
             api.send('POST', api.cards, ()=> sendCard(input))
-              .then(obtainedCard => {
+              .then(cards => {
                 const card = new Card ({
-                  data: obtainedCard[0],
+                  data: cards.at(0),
                   handleOpenClick: (name, link) => {;
                     popupWithImage.open(name, link);
                   },
@@ -96,7 +96,7 @@ api.do('GET', api.me)
                     dltForm.open()
                   },
                   handleLikeClick: (likes, id) => {
-                    if(!likes.find(like => like._id === userData._id)) {
+                    if(!likes.some(like => like._id === userData._id)) {
                       api.do('PUT', api.likes, id)
                         .then(likes.push(userData))
                         .catch(err=> errorMessage.open(err))

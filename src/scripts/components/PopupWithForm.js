@@ -18,7 +18,7 @@ export default class PopupWithForm extends Popup {
       .querySelector('.popup__processing-btn')
       .style.visibility = 'hidden'
   }
-  
+
   _process() {
     this._form
       .querySelector('.popup__processing-btn')
@@ -41,10 +41,9 @@ export default class PopupWithForm extends Popup {
     }
 
     const enableListener = (e) => {
+      const clicks = ['popup__close-btn', 'popup_active']
     if(e.key === 'Escape'
-      || e.target.classList.contains('popup__close-btn')
-      || e.target.classList.contains('popup__image-container')
-      || e.target.classList.contains('popup_active')){
+      || clicks.some(click=> e.target.classList.contains(click))){
         this.close();
         rmEventListeners()
 
