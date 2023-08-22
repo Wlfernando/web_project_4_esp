@@ -14,7 +14,7 @@ export default class Popup {
 
   setEventListeners() {
     const enableListener = (e) => {
-      const clicks = ['popup__close-btn', 'popup__image-container', 'popup_active']
+      const clicks = ['button__close', 'popup__image-container', 'popup_active']
       if(e.key === 'Escape'
       || clicks.some(click=> e.target.classList.contains(click))){
         this.close();

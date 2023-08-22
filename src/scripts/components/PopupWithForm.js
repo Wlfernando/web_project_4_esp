@@ -15,13 +15,13 @@ export default class PopupWithForm extends Popup {
 
   _isDone() {
     this._form
-      .querySelector('.popup__processing-btn')
+      .querySelector('.button__submit_processing')
       .style.visibility = 'hidden'
   }
 
   _process() {
     this._form
-      .querySelector('.popup__processing-btn')
+      .querySelector('.button__submit_processing')
       .style.visibility = 'visible'
   }
 
@@ -41,13 +41,13 @@ export default class PopupWithForm extends Popup {
     }
 
     const enableListener = (e) => {
-      const clicks = ['popup__close-btn', 'popup_active']
+      const clicks = ['button__close', 'popup_active']
     if(e.key === 'Escape'
       || clicks.some(click=> e.target.classList.contains(click))){
         this.close();
         rmEventListeners()
 
-      } else if(e.target.classList.contains('popup__save-btn')) {
+      } else if(e.target.classList.contains('button__submit')) {
         this._handleFormSubmit(this._getInputValues());
         rmEventListeners()
         this._process()
