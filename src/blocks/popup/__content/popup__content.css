@@ -1,8 +1,7 @@
 .popup__content {
   width: 80%;
-  height: 80%;
   border: none;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  row-gap: 25px;
 }
