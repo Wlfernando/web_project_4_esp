@@ -34,13 +34,13 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    const rmEventListeners = () => {
+    const rmEventListeners = ()=> {
       document.removeEventListener('keydown', enableListener);
       this._popupSelector.removeEventListener('click', enableListener);
       this._popupSelector.removeEventListener('submit', enableListener)
     }
 
-    const enableListener = (e) => {
+    const enableListener = e=> {
       const clicks = ['button__close', 'popup_active']
     if(e.key === 'Escape'
       || clicks.some(click=> e.target.classList.contains(click))){

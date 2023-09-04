@@ -24,7 +24,7 @@ const api = new Api({
 
 api.me = '/web_es_07/users/me';
 api.cards = '/web_es_07/cards';
-api.avatar = '/web_es_07/users/me/avatar';
+api.avatar = api.me + '/avatar';
 api.likes = api.cards + '/likes';
 
 const errorMessage = new PopupWithError(errorPopup)
@@ -32,7 +32,6 @@ const popupWithImage = new PopupWithImage(displayCard);
 
 api.do('GET', api.me)
   .then(userData => {
-    console.log(userData)
     const user = new UserInfo(userData);
 
     api.do('GET', api.cards)
@@ -135,7 +134,7 @@ api.do('GET', api.me)
 
 const userForm = new PopupWithForm({
   handleFormSubmit: (input) => {
-    api.send('PATCH', api.me, ()=> sendUser(input))
+    api.send('PATCH', api.me, sendUser.bind(this, input))
       .then(userData=> {
         const editedUser = new UserInfo(userData)
         editedUser.setUserInfo()
@@ -153,7 +152,7 @@ const userForm = new PopupWithForm({
 
 const avatarForm = new PopupWithForm({
   handleFormSubmit: (input) => {
-    api.send('PATCH', api.avatar, ()=> sendAvatar(input), api.me)
+    api.send('PATCH', api.avatar, sendAvatar.bind(this, input), api.me)
       .then(userData=> {
         const editedAvatar = new UserInfo(userData)
         editedAvatar.setAvatar()
