@@ -7,6 +7,6 @@
   transition: opacity 100ms ease-out 0ms;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   opacity: .5;
 }
