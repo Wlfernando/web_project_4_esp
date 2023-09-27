@@ -3,7 +3,7 @@ import{
   profileFormPopup, cardFormPopup, cardFormBtn, displayCard, cardTemplate,
   avatarPopup, avatar, errorPopup
 } from "./scripts/utils/constants.js";
-import{ sendCard, sendUser, sendAvatar } from './scripts/utils/utils.js';
+import{ sendCard, sendUser, sendAvatar, handleLikeClick } from './scripts/utils/utils.js';
 import Section from './scripts/components/Section.js';
 import Card from './scripts/components/Card.js';
 import PopupWithImage from "./scripts/components/PopupWithImage.js";
@@ -27,19 +27,19 @@ api.cards = '/web_es_07/cards';
 api.avatar = api.me + '/avatar';
 api.likes = api.cards + '/likes';
 
-const errorMessage = new PopupWithError(errorPopup)
-const popupWithImage = new PopupWithImage(displayCard);
-
-api.do('GET', api.me)
-  .then(userData => {
-    const user = new UserInfo(userData);
-
-    api.do('GET', api.cards)
-      .then(cards => {
-        const cardList = new Section ({
-          data: cards,
-          renderer: (item) => {
-            const card = new Card({
+const
+  errorMessage = new PopupWithError(errorPopup),
+  popupWithImage = new PopupWithImage(displayCard),
+  user = await api.do('GET', api.me)
+    .then(userData=> new UserInfo(userData))
+    .catch(err => errorMessage.open(err)),
+  userId =  user.getUserInfo().id,
+  cardList = await api.do('GET', api.cards)
+    .then(cards => new Section ({
+        data: cards,
+        renderer: (item) => {
+          const
+            card = new Card({
               data: item,
               handleOpenClick: (name, link)=> {
                 popupWithImage.open(name, link)
@@ -55,114 +55,94 @@ api.do('GET', api.me)
                 }, deleteForm)
                 dltForm.open()
               },
-              handleLikeClick: (likes, id) => {
-                if(!likes.some(like => like._id === userData._id)) {
-                  api.do('PUT', api.likes, id)
-                    .then(likes.push(userData))
+              handleLikeClick
+            }, cardTemplate),
+            cardElement = card.renderCard();
+
+          card.isVerified(userId)
+          cardList.addItem(cardElement)
+        }
+      }, cardsContainer)
+    )
+    .catch(err => errorMessage.open(err)),
+  cardForm = new PopupWithForm ({
+    handleFormSubmit: (input) => {
+      api.send('POST', api.cards, ()=> sendCard(input))
+        .then(cards => {
+          const card = new Card ({
+            data: cards.at(0),
+            handleOpenClick: (name, link) => {;
+              popupWithImage.open(name, link);
+            },
+            handleDeleteClick: (id) => {
+              const dltForm = new PopupWithForm({
+                handleFormSubmit: () => {
+                  api.do('DELETE', api.cards, id)
+                    .then(card.handleRemover())
                     .catch(err=> errorMessage.open(err))
-                } else {
-                  api.do('DELETE', api.likes, id)
-                    .then(likes.pop())
-                    .catch(err=> errorMessage.open(err))
+                    .finally(()=> dltForm.close())
                 }
-              }
-            }, cardTemplate);
-            const cardElement = card.renderCard();
-            card.isVerified(userData)
-            cardList.addItem(cardElement)
+              }, deleteForm)
+              dltForm.open()
+            },
+            handleLikeClick
+          }, cardTemplate)
+          const cardElement = card.renderCard();
+          cardList.addItem(cardElement, 'prepend')
+        })
+        .catch(err => errorMessage.open(err))
+        .finally(()=> cardForm.close())
+      }
+  }, cardFormPopup),
+  userForm = new PopupWithForm({
+    handleFormSubmit: (input) => {
+      api.send('PATCH', api.me, sendUser.bind(this, input))
+        .then(userData=> {
+          const editedUser = new UserInfo(userData)
+          editedUser.setUserInfo()
+          profileFormBtn.onclick = () => {
+            const {name, about} = document.forms.profileForm.elements;
+            userForm.open();
+            name.value = editedUser.getUserInfo().name;
+            about.value = editedUser.getUserInfo().about
           }
-        }, cardsContainer)
-        cardList.renderItems()
-
-        const cardForm = new PopupWithForm ({
-          handleFormSubmit: (input) => {
-            api.send('POST', api.cards, ()=> sendCard(input))
-              .then(cards => {
-                const card = new Card ({
-                  data: cards.at(0),
-                  handleOpenClick: (name, link) => {;
-                    popupWithImage.open(name, link);
-                  },
-                  handleDeleteClick: (id) => {
-                    const dltForm = new PopupWithForm({
-                      handleFormSubmit: () => {
-                        api.do('DELETE', api.cards, id)
-                          .then(card.handleRemover())
-                          .catch(err=> errorMessage.open(err))
-                          .finally(()=> dltForm.close())
-                      }
-                    }, deleteForm)
-                    dltForm.open()
-                  },
-                  handleLikeClick: (likes, id) => {
-                    if(!likes.some(like => like._id === userData._id)) {
-                      api.do('PUT', api.likes, id)
-                        .then(likes.push(userData))
-                        .catch(err=> errorMessage.open(err))
-                    } else {
-                      api.do('DELETE', api.likes, id)
-                        .then(likes.pop())
-                        .catch(err=> errorMessage.open(err))
-                    }
-                  }
-                }, cardTemplate)
-                const cardElement = card.renderCard();
-                cardList.addItem(cardElement, 'prepend')
-              })
-              .catch(err => errorMessage.open(err))
-              .finally(()=> cardForm.close())
-          }
-        }, cardFormPopup)
-
-        profileFormBtn.onclick = () => {
-          const {name, about} = document.forms.profileForm.elements;
-          userForm.open();
-          name.value = user.getUserInfo().name;
-          about.value = user.getUserInfo().about
-        }
-
-        avatar.onclick = () => avatarForm.open()
-
-        cardFormBtn.onclick = () => cardForm.open()
-
-        user.setUserInfo();
-        user.setAvatar();
+        })
+        .catch(err => errorMessage.open(err))
+        .finally(()=> userForm.close())
+    }
+  }, profileFormPopup),
+  avatarForm = new PopupWithForm({
+    handleFormSubmit: (input) => {
+      api.send('PATCH', api.avatar, sendAvatar.bind(this, input), api.me)
+        .then(userData=> {
+          const editedAvatar = new UserInfo(userData)
+          editedAvatar.setAvatar()
       })
-      .catch(err => errorMessage.open(err))
-  })
-  .catch(err => errorMessage.open(err))
-
-const userForm = new PopupWithForm({
-  handleFormSubmit: (input) => {
-    api.send('PATCH', api.me, sendUser.bind(this, input))
-      .then(userData=> {
-        const editedUser = new UserInfo(userData)
-        editedUser.setUserInfo()
-        profileFormBtn.onclick = () => {
-          const {name, about} = document.forms.profileForm.elements;
-          userForm.open();
-          name.value = editedUser.getUserInfo().name;
-          about.value = editedUser.getUserInfo().about
-        }
-      })
-      .catch(err => errorMessage.open(err))
-      .finally(()=> userForm.close())
-  }
-}, profileFormPopup)
-
-const avatarForm = new PopupWithForm({
-  handleFormSubmit: (input) => {
-    api.send('PATCH', api.avatar, sendAvatar.bind(this, input), api.me)
-      .then(userData=> {
-        const editedAvatar = new UserInfo(userData)
-        editedAvatar.setAvatar()
-    })
-      .catch(err=> errorMessage.open(err))
-      .finally(()=> avatarForm.close())
-  }
-}, avatarPopup)
+        .catch(err=> errorMessage.open(err))
+        .finally(()=> avatarForm.close())
+    }
+  }, avatarPopup);
 
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);
   form.enableValidation()
 })
+
+profileFormBtn.onclick = () => {
+  const {name, about} = document.forms.profileForm.elements;
+  userForm.open();
+  name.value = user.getUserInfo().name;
+  about.value = user.getUserInfo().about
+}
+
+avatar.onclick = () => avatarForm.open()
+
+cardFormBtn.onclick = () => cardForm.open()
+
+user.setUserInfo();
+
+user.setAvatar();
+
+cardList.renderItems();
+
+export {api, user, userId}
