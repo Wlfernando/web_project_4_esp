@@ -30,21 +30,21 @@ export default class Card {
     return this._element
   }
 
-  isVerified(userData) {
-    this._hasDustbin(userData)
-    this._isLiked(userData)
+  isVerified(id) {
+    this._hasDustbin(id)
+    this._isLiked(id)
   }
 
-  _hasDustbin(userData) {
-    if(this._owner._id !== userData._id)
+  _hasDustbin(id) {
+    if(this._owner._id !== id)
     this._element
       .querySelector('.card__trash-button')
       .style
       .visibility = "hidden"
   }
 
-  _isLiked(userData) {
-    if(this._likes.some(like => like._id === userData._id)){
+  _isLiked(id) {
+    if(this._likes.some(like => like._id === id)){
       this._element
         .querySelector('.card__like-button')
         .classList
