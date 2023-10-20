@@ -11,31 +11,31 @@ export default class Card {
     this._selector = selector
   }
 
-  _getTemplate() {
+  get _template() {
     const cardTemplate = document.querySelector(this._selector).content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     return cardElement
   }
 
   renderCard() {
-    this._element = this._getTemplate();
+    this._element = this._template;
     this._setEventListeners();
 
     const cardImage = this._element.querySelector('.card__image');
     cardImage.src = this._link;
     cardImage.alt = this._name;
     this._element.querySelector('.card__place-name').textContent = this._name;
-    this._showNumberLikes()
+    this._numberOfLikes
 
     return this._element
   }
 
-  isVerified(id) {
-    this._hasDustbin(id)
-    this._isLiked(id)
+  set verification(id) {
+    this._dustbin = id
+    this._like = id
   }
 
-  _hasDustbin(id) {
+  set _dustbin(id) {
     if(this._owner._id !== id)
     this._element
       .querySelector('.card__trash-button')
@@ -43,7 +43,7 @@ export default class Card {
       .visibility = "hidden"
   }
 
-  _isLiked(id) {
+  set _like(id) {
     if(this._likes.some(like => like._id === id)){
       this._element
         .querySelector('.card__like-button')
@@ -52,7 +52,7 @@ export default class Card {
     }
   }
 
-  _showNumberLikes() {
+  get _numberOfLikes() {
     this._element
       .querySelector('.card__likes-count')
       .textContent = this._likes.length || undefined
@@ -61,10 +61,10 @@ export default class Card {
   _handleLikeBtn(e) {
     e.target.classList.toggle('card__like-button_active')
     this._handleLikeClick(this._likes, this._id)
-    this._showNumberLikes()
+    this._numberOfLikes
   }
 
-  handleRemover() {
+  get remover() {
     this._element.closest('.card').remove()
   }
 

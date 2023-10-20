@@ -7,7 +7,7 @@ export default class UserInfo {
     this._group = cohort
   }
 
-  getUserInfo() {
+  get info() {
     return {
       name: this._name,
       about: this._job,

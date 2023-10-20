@@ -1,4 +1,4 @@
-import {api, user, userId} from '../../index.js'
+import {api, user, userId, showError} from '../../index.js'
 
 function sendCard(data) {
   return {
@@ -15,7 +15,7 @@ function sendUser(data) {
 }
 
 function sendAvatar(data) {
-  return {avatar: data.avatar}
+  return { avatar: data.avatar }
 }
 
 function handleLikeClick(likes, id) {
@@ -24,14 +24,14 @@ function handleLikeClick(likes, id) {
     return like._id  === userId
   })
 
-  if(!haveLike) {
-    api.do('PUT', api.likes, id)
-      .then(likes.push(user.getUserInfo()))
-      .catch(err=> errorMessage.open(err))
-  } else {
+  if (haveLike) {
     api.do('DELETE', api.likes, id)
       .then(likes.pop())
-      .catch(err=> errorMessage.open(err))
+      .catch(showError)
+  } else {
+    api.do('PUT', api.likes, id)
+      .then(likes.push(user.info))
+      .catch(showError)
   }
 }
 

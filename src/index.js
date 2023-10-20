@@ -29,11 +29,16 @@ api.likes = api.cards + '/likes';
 
 const
   errorMessage = new PopupWithError(errorPopup),
+  showError = errorMessage.open.bind(errorMessage),
+
   popupWithImage = new PopupWithImage(displayCard),
+  openImage = popupWithImage.open.bind(popupWithImage),
+
   user = await api.do('GET', api.me)
-    .then(userData=> new UserInfo(userData))
-    .catch(err => errorMessage.open(err)),
-  userId =  user.getUserInfo().id,
+    .then(userData => new UserInfo(userData))
+    .catch(showError),
+  userId = user.info.id,
+
   cardList = await api.do('GET', api.cards)
     .then(cards => new Section ({
         data: cards,
@@ -41,16 +46,14 @@ const
           const
             card = new Card({
               data: item,
-              handleOpenClick: (name, link)=> {
-                popupWithImage.open(name, link)
-              },
+              handleOpenClick: openImage,
               handleDeleteClick: (id) => {
                 const dltForm = new PopupWithForm({
                   handleFormSubmit: () => {
                     api.do('DELETE', api.cards, id)
-                      .then(card.handleRemover())
-                      .catch(err=> errorMessage.open(err))
-                      .finally(()=> dltForm.close())
+                      .then(() => card.remover)
+                      .catch(showError)
+                      .finally(() => dltForm.close())
                   }
                 }, deleteForm)
                 dltForm.open()
@@ -59,28 +62,27 @@ const
             }, cardTemplate),
             cardElement = card.renderCard();
 
-          card.isVerified(userId)
+          card.verification = userId
           cardList.addItem(cardElement)
         }
       }, cardsContainer)
     )
     .catch(err => errorMessage.open(err)),
+
   cardForm = new PopupWithForm ({
     handleFormSubmit: (input) => {
-      api.send('POST', api.cards, ()=> sendCard(input))
+      api.send('POST', api.cards, () => sendCard(input))
         .then(cards => {
           const card = new Card ({
             data: cards.at(0),
-            handleOpenClick: (name, link) => {;
-              popupWithImage.open(name, link);
-            },
+            handleOpenClick: openImage,
             handleDeleteClick: (id) => {
               const dltForm = new PopupWithForm({
                 handleFormSubmit: () => {
                   api.do('DELETE', api.cards, id)
-                    .then(card.handleRemover())
-                    .catch(err=> errorMessage.open(err))
-                    .finally(()=> dltForm.close())
+                    .then(() => card.remover)
+                    .catch(showError)
+                    .finally(() => dltForm.close())
                 }
               }, deleteForm)
               dltForm.open()
@@ -94,6 +96,7 @@ const
         .finally(()=> cardForm.close())
       }
   }, cardFormPopup),
+
   userForm = new PopupWithForm({
     handleFormSubmit: (input) => {
       api.send('PATCH', api.me, sendUser.bind(this, input))
@@ -103,14 +106,15 @@ const
           profileFormBtn.onclick = () => {
             const {name, about} = document.forms.profileForm.elements;
             userForm.open();
-            name.value = editedUser.getUserInfo().name;
-            about.value = editedUser.getUserInfo().about
+            name.value = editedUser.info.name;
+            about.value = editedUser.info.about
           }
         })
-        .catch(err => errorMessage.open(err))
-        .finally(()=> userForm.close())
+        .catch(showError)
+        .finally(() => userForm.close())
     }
   }, profileFormPopup),
+
   avatarForm = new PopupWithForm({
     handleFormSubmit: (input) => {
       api.send('PATCH', api.avatar, sendAvatar.bind(this, input), api.me)
@@ -118,8 +122,8 @@ const
           const editedAvatar = new UserInfo(userData)
           editedAvatar.setAvatar()
       })
-        .catch(err=> errorMessage.open(err))
-        .finally(()=> avatarForm.close())
+        .catch(showError)
+        .finally(() => avatarForm.close())
     }
   }, avatarPopup);
 
@@ -131,8 +135,8 @@ formList.forEach(formElement => {
 profileFormBtn.onclick = () => {
   const {name, about} = document.forms.profileForm.elements;
   userForm.open();
-  name.value = user.getUserInfo().name;
-  about.value = user.getUserInfo().about
+  name.value = user.info.name;
+  about.value = user.info.about
 }
 
 avatar.onclick = () => avatarForm.open()
@@ -145,4 +149,4 @@ user.setAvatar();
 
 cardList.renderItems();
 
-export {api, user, userId}
+export {api, user, userId, showError}

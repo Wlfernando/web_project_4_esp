@@ -25,7 +25,7 @@ export default class PopupWithForm extends Popup {
       .style.visibility = 'visible'
   }
 
-  _getInputValues() {
+  get _InputValues() {
     this._inputList = this._popupSelector.querySelectorAll('.popup__item');
     this._formValues = {};
     this._inputList.forEach(input =>
@@ -34,21 +34,22 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    const rmEventListeners = ()=> {
+    const rmEventListeners = () => {
       document.removeEventListener('keydown', enableListener);
       this._popupSelector.removeEventListener('click', enableListener);
       this._popupSelector.removeEventListener('submit', enableListener)
     }
 
-    const enableListener = e=> {
-      const clicks = ['button__close', 'popup_active']
-    if(e.key === 'Escape'
-      || clicks.some(click=> e.target.classList.contains(click))){
+    const enableListener = e => {
+      const
+        clicks = ['button__close', 'popup_active'],
+        isClicked = clicks.some(click=> e.target.classList.contains(click));
+
+      if (e.key === 'Escape' || isClicked) {
         this.close();
         rmEventListeners()
-
-      } else if(e.target.classList.contains('button__submit')) {
-        this._handleFormSubmit(this._getInputValues());
+      } else if (e.target.classList.contains('button__submit')) {
+        this._handleFormSubmit(this._InputValues);
         rmEventListeners()
         this._process()
       }
