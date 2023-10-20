@@ -1,11 +1,9 @@
 import{
-  cardsContainer, formList, formConfig, profileFormBtn, deleteForm,
-  profileFormPopup, cardFormPopup, cardFormBtn, displayCard, cardTemplate,
+  formList, formConfig, profileFormBtn,
+  profileFormPopup, cardFormPopup, cardFormBtn, displayCard,
   avatarPopup, avatar, errorPopup
 } from "./scripts/utils/constants.js";
-import{ sendCard, sendUser, sendAvatar, handleLikeClick } from './scripts/utils/utils.js';
-import Section from './scripts/components/Section.js';
-import Card from './scripts/components/Card.js';
+import{ sendCard, sendUser, sendAvatar, setCardsSection } from './scripts/utils/utils.js';
 import PopupWithImage from "./scripts/components/PopupWithImage.js";
 import PopupWithForm from "./scripts/components/PopupWithForm.js";
 import PopupWithError from './scripts/components/PopupWithError.js';
@@ -32,7 +30,6 @@ const
   showError = errorMessage.open.bind(errorMessage),
 
   popupWithImage = new PopupWithImage(displayCard),
-  openImage = popupWithImage.open.bind(popupWithImage),
 
   user = await api.do('GET', api.me)
     .then(userData => new UserInfo(userData))
@@ -40,60 +37,16 @@ const
   userId = user.info.id,
 
   cardList = await api.do('GET', api.cards)
-    .then(cards => new Section ({
-        data: cards,
-        renderer: (item) => {
-          const
-            card = new Card({
-              data: item,
-              handleOpenClick: openImage,
-              handleDeleteClick: (id) => {
-                const dltForm = new PopupWithForm({
-                  handleFormSubmit: () => {
-                    api.do('DELETE', api.cards, id)
-                      .then(() => card.remover)
-                      .catch(showError)
-                      .finally(() => dltForm.close())
-                  }
-                }, deleteForm)
-                dltForm.open()
-              },
-              handleLikeClick
-            }, cardTemplate),
-            cardElement = card.renderCard();
-
-          card.verification = userId
-          cardList.addItem(cardElement)
-        }
-      }, cardsContainer)
-    )
-    .catch(err => errorMessage.open(err)),
+    .then(setCardsSection)
+    .catch(showError),
 
   cardForm = new PopupWithForm ({
     handleFormSubmit: (input) => {
       api.send('POST', api.cards, () => sendCard(input))
-        .then(cards => {
-          const card = new Card ({
-            data: cards.at(0),
-            handleOpenClick: openImage,
-            handleDeleteClick: (id) => {
-              const dltForm = new PopupWithForm({
-                handleFormSubmit: () => {
-                  api.do('DELETE', api.cards, id)
-                    .then(() => card.remover)
-                    .catch(showError)
-                    .finally(() => dltForm.close())
-                }
-              }, deleteForm)
-              dltForm.open()
-            },
-            handleLikeClick
-          }, cardTemplate)
-          const cardElement = card.renderCard();
-          cardList.addItem(cardElement, 'prepend')
-        })
-        .catch(err => errorMessage.open(err))
-        .finally(()=> cardForm.close())
+        .then(setCardsSection)
+        .then(section => section.renderItems())
+        .catch(showError)
+        .finally(() => cardForm.close())
       }
   }, cardFormPopup),
 
@@ -149,4 +102,4 @@ user.setAvatar();
 
 cardList.renderItems();
 
-export {api, user, userId, showError}
+export {api, user, userId, showError, popupWithImage, cardList}
