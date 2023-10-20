@@ -53,8 +53,8 @@ const
   userForm = new PopupWithForm({
     handleFormSubmit: (input) => {
       api.send('PATCH', api.me, sendUser.bind(this, input))
-        .then(userData=> {
-          const editedUser = new UserInfo(userData)
+        .then(userData => new UserInfo(userData))
+        .then(editedUser => {
           editedUser.setUserInfo()
           profileFormBtn.onclick = () => {
             const {name, about} = document.forms.profileForm.elements;
@@ -71,10 +71,8 @@ const
   avatarForm = new PopupWithForm({
     handleFormSubmit: (input) => {
       api.send('PATCH', api.avatar, sendAvatar.bind(this, input), api.me)
-        .then(userData=> {
-          const editedAvatar = new UserInfo(userData)
-          editedAvatar.setAvatar()
-      })
+        .then(userData => new UserInfo(userData))
+        .then(editedAvatar=> editedAvatar.setAvatar())
         .catch(showError)
         .finally(() => avatarForm.close())
     }
