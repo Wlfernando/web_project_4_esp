@@ -12,25 +12,29 @@ export default class Popup {
     this._popupSelector.classList.remove('popup_active')
   }
 
-  setEventListeners() {
-    const enableListener = (e) => {
-      const
-        clicks = ['button__close', 'popup__image-container', 'popup_active'],
-        isClicked = clicks.some(click => e.target.classList.contains(click));
+  _handleClose(e) {
+    const
+      clicks = ['button__close', 'popup__image-container', 'popup_active'],
+      isClicked = clicks.some(click => e.target.classList.contains(click));
 
-      if (e.key === 'Escape' || isClicked) {
-        this.close();
-        document.removeEventListener('keydown', enableListener);
-        this._popupSelector.removeEventListener('click', enableListener);
-      }
+    this._event = e.key === 'Escape' || isClicked;
+
+    if (this._event) {
+      this.close();
+      document.removeEventListener('keydown', this._enableClose);
+      this._popupSelector.removeEventListener('click', this._enableClose);
     }
+  }
+
+  setEventListeners() {
+    this._enableClose = this._handleClose.bind(this)
 
     document.addEventListener(
-      'keydown', enableListener
+      'keydown', this._enableClose
     )
 
     this._popupSelector.addEventListener(
-      'click', enableListener
+      'click', this._enableClose
     )
   }
 }

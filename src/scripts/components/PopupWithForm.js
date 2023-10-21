@@ -4,13 +4,16 @@ export default class PopupWithForm extends Popup {
   constructor({handleFormSubmit}, popupSelector) {
     super(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
-    this._form = this._popupSelector.querySelector('.popup__container');
+  }
+
+  get _form() {
+    return this._popupSelector.querySelector('.popup__container');
   }
 
   close() {
     super.close();
     this._form.reset();
-    this._isDone()
+    this._isDone();
   }
 
   _isDone() {
@@ -28,43 +31,35 @@ export default class PopupWithForm extends Popup {
   get _InputValues() {
     this._inputList = this._popupSelector.querySelectorAll('.popup__item');
     this._formValues = {};
+
     this._inputList.forEach(input =>
       this._formValues[input.name] = input.value);
+
     return this._formValues
   }
 
+  _handleClose(e) {
+    super._handleClose(e);
+
+    if (this._event) {
+      this._popupSelector.removeEventListener('submit', this._enableSubmit);
+    }
+  }
+
+  _handleSubmit() {
+    this._handleFormSubmit(this._InputValues);
+    this._process();
+    document.removeEventListener('keydown', this._enableClose);
+    this._popupSelector.removeEventListener('click', this._enableClose);
+    this._popupSelector.removeEventListener('submit', this._enableSubmit);
+  }
+
   setEventListeners() {
-    const rmEventListeners = () => {
-      document.removeEventListener('keydown', enableListener);
-      this._popupSelector.removeEventListener('click', enableListener);
-      this._popupSelector.removeEventListener('submit', enableListener)
-    }
-
-    const enableListener = e => {
-      const
-        clicks = ['button__close', 'popup_active'],
-        isClicked = clicks.some(click=> e.target.classList.contains(click));
-
-      if (e.key === 'Escape' || isClicked) {
-        this.close();
-        rmEventListeners()
-      } else if (e.target.classList.contains('button__submit')) {
-        this._handleFormSubmit(this._InputValues);
-        rmEventListeners()
-        this._process()
-      }
-    }
-
-    document.addEventListener(
-      'keydown', enableListener
-    )
+    super.setEventListeners();
+    this._enableSubmit = this._handleSubmit.bind(this);
 
     this._popupSelector.addEventListener(
-      'click', enableListener
-    )
-
-    this._popupSelector.addEventListener(
-      'submit', enableListener
+      'submit', this._enableSubmit
     )
   }
 }
