@@ -28,14 +28,14 @@ export default class Api {
       })
   }
 
-  send(action, endPoint, sendBody, root) {
+  send(action, endPoint, input, root) {
     return fetch(this._baseUrl + endPoint, {
       method: action,
       headers: {
         authorization: this._authorization,
         "content-Type": this._contentType
       },
-      body: JSON.stringify(sendBody())
+      body: JSON.stringify(input)
     })
       .then(()=> this.do('GET', root ?? endPoint))
   }

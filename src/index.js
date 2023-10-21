@@ -3,7 +3,7 @@ import{
   profileFormPopup, cardFormPopup, cardFormBtn, displayCard,
   avatarPopup, avatar, errorPopup
 } from "./scripts/utils/constants.js";
-import{ sendCard, sendUser, sendAvatar, setCardsSection } from './scripts/utils/utils.js';
+import{ setCardsSection } from './scripts/utils/utils.js';
 import PopupWithImage from "./scripts/components/PopupWithImage.js";
 import PopupWithForm from "./scripts/components/PopupWithForm.js";
 import PopupWithError from './scripts/components/PopupWithError.js';
@@ -42,7 +42,7 @@ const
 
   cardForm = new PopupWithForm ({
     handleFormSubmit: (input) => {
-      api.send('POST', api.cards, () => sendCard(input))
+      api.send('POST', api.cards, input)
         .then(setCardsSection)
         .then(section => section.renderItems())
         .catch(showError)
@@ -52,7 +52,7 @@ const
 
   userForm = new PopupWithForm({
     handleFormSubmit: (input) => {
-      api.send('PATCH', api.me, sendUser.bind(this, input))
+      api.send('PATCH', api.me, input)
         .then(userData => new UserInfo(userData))
         .then(editedUser => {
           editedUser.setUserInfo()
@@ -70,7 +70,7 @@ const
 
   avatarForm = new PopupWithForm({
     handleFormSubmit: (input) => {
-      api.send('PATCH', api.avatar, sendAvatar.bind(this, input), api.me)
+      api.send('PATCH', api.avatar, input, api.me)
         .then(userData => new UserInfo(userData))
         .then(editedAvatar=> editedAvatar.setAvatar())
         .catch(showError)

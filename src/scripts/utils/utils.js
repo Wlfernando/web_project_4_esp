@@ -4,24 +4,6 @@ import Section from '../components/Section.js'
 import Card from '../components/Card.js'
 import PopupWithForm from '../components/PopupWithForm.js'
 
-function sendCard(data) {
-  return {
-    name: data.name,
-    link: data.link
-  }
-}
-
-function sendUser(data) {
-  return {
-    name: data.name,
-    about: data.about
-  }
-}
-
-function sendAvatar(data) {
-  return { avatar: data.avatar }
-}
-
 function setCardsSection(items) {
   return new Section ({
     data: items,
@@ -66,4 +48,4 @@ function setCardsSection(items) {
   }, cardsContainer)
 }
 
-export { sendCard, sendUser, sendAvatar, setCardsSection };
+export { setCardsSection };
