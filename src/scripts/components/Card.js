@@ -17,26 +17,28 @@ export default class Card {
     return cardElement
   }
 
-  renderCard() {
+  renderCard(id) {
     this._element = this._template;
     this._setEventListeners();
 
     const cardImage = this._element.querySelector('.card__image');
+
     cardImage.src = this._link;
     cardImage.alt = this._name;
     this._element.querySelector('.card__place-name').textContent = this._name;
+    this._verification = id
     this._numberOfLikes
 
     return this._element
   }
 
-  set verification(id) {
+  set _verification(id) {
     this._dustbin = id
     this._like = id
   }
 
   set _dustbin(id) {
-    if(this._owner._id !== id)
+    if (this._owner._id !== id)
     this._element
       .querySelector('.card__trash-button')
       .style
@@ -44,12 +46,11 @@ export default class Card {
   }
 
   set _like(id) {
-    if(this._likes.some(like => like._id === id)){
-      this._element
-        .querySelector('.card__like-button')
-        .classList
-        .add('card__like-button_active')
-    }
+    if (this._likes.some(like => like._id === id))
+    this._element
+      .querySelector('.card__like-button')
+      .classList
+      .add('card__like-button_active')
   }
 
   get _numberOfLikes() {

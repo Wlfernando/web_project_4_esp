@@ -8,42 +8,39 @@ function setCardsSection(items) {
   return new Section ({
     data: items,
     renderer: (singleItem) => {
-      const
-        card = new Card({
-          data: singleItem,
-          handleOpenClick: popupWithImage.open.bind(popupWithImage),
-          handleDeleteClick: (id) => {
-            const dltForm = new PopupWithForm({
-              handleFormSubmit: () => {
-                api.do('DELETE', api.cards, id)
-                  .then(() => card.remover)
-                  .catch(showError)
-                  .finally(() => dltForm.close())
-              }
-            }, deleteForm)
-            dltForm.open()
-          },
-          handleLikeClick: (likes, id) => {
-            const haveLike = likes.some(like => {
-              like._id ??= like.id
-              return like._id  === userId
-            })
-
-            if (haveLike) {
-              api.do('DELETE', api.likes, id)
-                .then(likes.pop())
+      const card = new Card({
+        data: singleItem,
+        handleOpenClick: popupWithImage.open.bind(popupWithImage),
+        handleDeleteClick: (id) => {
+          const dltForm = new PopupWithForm({
+            handleFormSubmit: () => {
+              api.do('DELETE', api.cards, id)
+                .then(() => card.remover)
                 .catch(showError)
-            } else {
-              api.do('PUT', api.likes, id)
-                .then(likes.push(user.info))
-                .catch(showError)
+                .finally(() => dltForm.close())
             }
-          }
-        }, cardTemplate),
-        cardElement = card.renderCard();
+          }, deleteForm)
+          dltForm.open()
+        },
+        handleLikeClick: (likes, id) => {
+          const haveLike = likes.some(like => {
+            like._id ??= like.id
+            return like._id  === userId
+          })
 
-      card.verification = userId
-      return cardElement
+          if (haveLike) {
+            api.do('DELETE', api.likes, id)
+              .then(likes.pop())
+              .catch(showError)
+          } else {
+            api.do('PUT', api.likes, id)
+              .then(likes.push(user.info))
+              .catch(showError)
+          }
+        }
+      }, cardTemplate);
+
+      return card.renderCard(userId)
     }
   }, cardsContainer)
 }
