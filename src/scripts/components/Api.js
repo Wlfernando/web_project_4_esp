@@ -28,7 +28,7 @@ export default class Api {
       })
   }
 
-  send(action, endPoint, input, root) {
+  send(action, endPoint, input, root = undefined) {
     return fetch(this._baseUrl + endPoint, {
       method: action,
       headers: {
