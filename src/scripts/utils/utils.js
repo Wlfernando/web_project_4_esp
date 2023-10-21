@@ -1,4 +1,4 @@
-import { api, user, userId, showError, popupWithImage } from '../../index.js'
+import { api, user, theId, showError, popupWithImage, userForm } from '../../index.js'
 import { deleteForm, cardTemplate, cardsContainer } from './constants.js'
 import Section from '../components/Section.js'
 import Card from '../components/Card.js'
@@ -7,9 +7,9 @@ import PopupWithForm from '../components/PopupWithForm.js'
 function setCardsSection(items) {
   return new Section ({
     data: items,
-    renderer: (singleItem) => {
+    renderer: (data) => {
       const card = new Card({
-        data: singleItem,
+        data,
         handleOpenClick: popupWithImage.open.bind(popupWithImage),
         handleDeleteClick: (id) => {
           const dltForm = new PopupWithForm({
@@ -25,7 +25,7 @@ function setCardsSection(items) {
         handleLikeClick: (likes, id) => {
           const haveLike = likes.some(like => {
             like._id ??= like.id
-            return like._id  === userId
+            return like._id  === theId
           })
 
           if (haveLike) {
@@ -40,9 +40,19 @@ function setCardsSection(items) {
         }
       }, cardTemplate);
 
-      return card.renderCard(userId)
+      return card.renderCard(theId)
     }
   }, cardsContainer)
 }
 
-export { setCardsSection };
+function setUserFields(anUser) {
+  const
+    {name, about} = document.forms.profileForm.elements,
+    {name: aName, about: anAbout} = anUser.info;
+
+  userForm.open();
+  name.value = aName;
+  about.value = anAbout;
+}
+
+export { setCardsSection, setUserFields };
