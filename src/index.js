@@ -3,7 +3,7 @@ import{
   profileFormPopup, cardFormPopup, cardFormBtn, displayCard,
   avatarPopup, avatar, errorPopup
 } from "./scripts/utils/constants.js";
-import{ setCardsSection } from './scripts/utils/utils.js';
+import{ setCardsSection, setUserFields } from './scripts/utils/utils.js';
 import PopupWithImage from "./scripts/components/PopupWithImage.js";
 import PopupWithForm from "./scripts/components/PopupWithForm.js";
 import PopupWithError from './scripts/components/PopupWithError.js';
@@ -34,11 +34,7 @@ const
   user = await api.do('GET', api.me)
     .then(userData => new UserInfo(userData))
     .catch(showError),
-  userId = user.info.id,
-
-  cardList = await api.do('GET', api.cards)
-    .then(setCardsSection)
-    .catch(showError),
+  theId = user.info.id,
 
   cardForm = new PopupWithForm ({
     handleFormSubmit: (input) => {
@@ -55,13 +51,8 @@ const
       api.send('PATCH', api.me, input)
         .then(userData => new UserInfo(userData))
         .then(editedUser => {
-          editedUser.setUserInfo()
-          profileFormBtn.onclick = () => {
-            const {name, about} = document.forms.profileForm.elements;
-            userForm.open();
-            name.value = editedUser.info.name;
-            about.value = editedUser.info.about
-          }
+          editedUser.setUserInfo();
+          profileFormBtn.onclick = () => setUserFields(editedUser);
         })
         .catch(showError)
         .finally(() => userForm.close())
@@ -72,32 +63,29 @@ const
     handleFormSubmit: (input) => {
       api.send('PATCH', api.avatar, input, api.me)
         .then(userData => new UserInfo(userData))
-        .then(editedAvatar=> editedAvatar.setAvatar())
+        .then(editedAvatar => editedAvatar.setAvatar())
         .catch(showError)
         .finally(() => avatarForm.close())
     }
   }, avatarPopup);
 
+api.do('GET', api.cards)
+  .then(setCardsSection)
+  .then(section => section.renderItems())
+  .catch(showError)
+
 formList.forEach(formElement => {
   const form = new FormValidator(formConfig, formElement);
   form.enableValidation()
-})
+});
 
-profileFormBtn.onclick = () => {
-  const {name, about} = document.forms.profileForm.elements;
-  userForm.open();
-  name.value = user.info.name;
-  about.value = user.info.about
-}
+profileFormBtn.onclick = () => setUserFields(user);
 
-avatar.onclick = () => avatarForm.open()
+avatar.onclick = () => avatarForm.open();
 
-cardFormBtn.onclick = () => cardForm.open()
+cardFormBtn.onclick = () => cardForm.open();
 
 user.setUserInfo();
-
 user.setAvatar();
 
-cardList.renderItems();
-
-export {api, user, userId, showError, popupWithImage, cardList}
+export { api, user, theId, showError, popupWithImage, userForm }

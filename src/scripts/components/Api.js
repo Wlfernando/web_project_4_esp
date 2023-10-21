@@ -12,11 +12,11 @@ export default class Api {
   }
 
   do(action, endPoint, id = null) {
-    const url = id
+    const anUrl = id
       ? this._baseUrl + endPoint + '/' + id
       : this._baseUrl + endPoint;
 
-    return fetch(url, {
+    return fetch(anUrl, {
       method: action,
       headers: {
         authorization: this._authorization
