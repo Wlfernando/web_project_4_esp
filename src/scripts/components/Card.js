@@ -22,7 +22,7 @@ export default class Card {
       id: this._id,
       likes: this._likes,
       remove: () => this._remover,
-      setLike: (e) => {
+      confirmLike: (e) => {
         e.target.classList.toggle('card__like-button_active');
         this._numberOfLikes;
       },

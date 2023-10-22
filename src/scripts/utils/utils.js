@@ -22,7 +22,7 @@ function setCardsSection(items) {
           }, deleteForm)
           dltForm.open()
         },
-        handleLikeClick: (e, { likes, id, setLike }) => {
+        handleLikeClick: (e, { likes, id, confirmLike }) => {
           const
             haveLike = likes.some(like => {
               like._id ??= like.id
@@ -36,7 +36,7 @@ function setCardsSection(items) {
           api.do(setLikeApi, api.likes, id)
             .then(() => {
               setLikeOnCard;
-              setLike(e);
+              confirmLike(e);
             })
             .catch(showError)
         }
