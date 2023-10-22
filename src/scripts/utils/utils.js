@@ -11,11 +11,11 @@ function setCardsSection(items) {
       const card = new Card({
         data,
         handleOpenClick: popupWithImage.open.bind(popupWithImage),
-        handleDeleteClick: (id) => {
+        handleDeleteClick: (thatCard) => {
           const dltForm = new PopupWithForm({
             handleFormSubmit: () => {
-              api.do('DELETE', api.cards, id)
-                .then(() => card.remover)
+              api.do('DELETE', api.cards, thatCard.Id)
+                .then(() => thatCard.remover)
                 .catch(showError)
                 .finally(() => dltForm.close())
             }

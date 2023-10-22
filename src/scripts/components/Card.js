@@ -1,5 +1,6 @@
 export default class Card {
   constructor({data, handleOpenClick, handleDeleteClick, handleLikeClick}, selector){
+    this._selector = selector
     this._likes = data.likes;
     this._name = data.name;
     this._link = data.link;
@@ -8,7 +9,6 @@ export default class Card {
     this._handleOpenClick = handleOpenClick;
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
-    this._selector = selector
   }
 
   get _template() {
@@ -17,12 +17,16 @@ export default class Card {
     return cardElement
   }
 
+  get Id() {
+    return this._id
+  }
+
   renderCard(id) {
     this._element = this._template;
-    this._setEventListeners();
-
+    
     const cardImage = this._element.querySelector('.card__image');
 
+    this._setEventListeners();
     cardImage.src = this._link;
     cardImage.alt = this._name;
     this._element.querySelector('.card__place-name').textContent = this._name;
@@ -85,6 +89,6 @@ export default class Card {
       .querySelector('.card__trash-button')
       .addEventListener(
         'click',
-        this._handleDeleteClick.bind(this, this._id))
+        this._handleDeleteClick.bind(this, this))
   }
 }

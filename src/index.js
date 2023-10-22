@@ -40,7 +40,7 @@ const
     handleFormSubmit: (input) => {
       api.send('POST', api.cards, input)
         .then(setCardsSection)
-        .then(section => section.renderItems())
+        .then(cardsSection => cardsSection.renderItems())
         .catch(showError)
         .finally(() => cardForm.close())
       }
@@ -71,7 +71,7 @@ const
 
 api.do('GET', api.cards)
   .then(setCardsSection)
-  .then(section => section.renderItems())
+  .then(cardsSection => cardsSection.renderItems())
   .catch(showError)
 
 formList.forEach(formElement => {
