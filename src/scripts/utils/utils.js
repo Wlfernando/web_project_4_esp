@@ -11,32 +11,34 @@ function setCardsSection(items) {
       const card = new Card({
         data,
         handleOpenClick: popupWithImage.open.bind(popupWithImage),
-        handleDeleteClick: (thatCard) => {
+        handleDeleteClick: ({ id, remove }) => {
           const dltForm = new PopupWithForm({
             handleFormSubmit: () => {
-              api.do('DELETE', api.cards, thatCard.id)
-                .then(() => thatCard.remover)
+              api.do('DELETE', api.cards, id)
+                .then(() => remove())
                 .catch(showError)
                 .finally(() => dltForm.close())
             }
           }, deleteForm)
           dltForm.open()
         },
-        handleLikeClick: (likes, id) => {
-          const haveLike = likes.some(like => {
-            like._id ??= like.id
-            return like._id  === theId
-          })
+        handleLikeClick: (e, { likes, id, setLike }) => {
+          const
+            haveLike = likes.some(like => {
+              like._id ??= like.id
+              return like._id  === theId
+            }),
+            setLikeApi = haveLike ? 'DELETE' : 'PUT',
+            setLikeOnCard = haveLike
+              ? likes.pop()
+              : likes.push(user.info);
 
-          if (haveLike) {
-            api.do('DELETE', api.likes, id)
-              .then(likes.pop())
-              .catch(showError)
-          } else {
-            api.do('PUT', api.likes, id)
-              .then(likes.push(user.info))
-              .catch(showError)
-          }
+          api.do(setLikeApi, api.likes, id)
+            .then(() => {
+              setLikeOnCard;
+              setLike(e);
+            })
+            .catch(showError)
         }
       }, cardTemplate);
 

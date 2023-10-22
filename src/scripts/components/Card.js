@@ -17,8 +17,16 @@ export default class Card {
     return cardElement
   }
 
-  get id() {
-    return this._id
+  get _async() {
+    return {
+      id: this._id,
+      likes: this._likes,
+      remove: () => this._remover,
+      setLike: (e) => {
+        e.target.classList.toggle('card__like-button_active');
+        this._numberOfLikes;
+      },
+    }
   }
 
   renderCard(id) {
@@ -31,7 +39,6 @@ export default class Card {
     cardImage.alt = this._name;
     this._element.querySelector('.card__place-name').textContent = this._name;
     this._verification = id
-    this._numberOfLikes
 
     return this._element
   }
@@ -39,6 +46,7 @@ export default class Card {
   set _verification(id) {
     this._dustbin = id
     this._like = id
+    this._numberOfLikes
   }
 
   set _dustbin(id) {
@@ -64,12 +72,10 @@ export default class Card {
   }
 
   _handleLikeBtn(e) {
-    e.target.classList.toggle('card__like-button_active')
-    this._handleLikeClick(this._likes, this._id)
-    this._numberOfLikes
+    this._handleLikeClick(e, this._async)
   }
 
-  get remover() {
+  get _remover() {
     this._element.closest('.card').remove()
   }
 
@@ -89,6 +95,6 @@ export default class Card {
       .querySelector('.card__trash-button')
       .addEventListener(
         'click',
-        this._handleDeleteClick.bind(this, this))
+        this._handleDeleteClick.bind(this, this._async))
   }
 }
