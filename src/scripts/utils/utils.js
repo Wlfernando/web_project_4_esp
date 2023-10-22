@@ -7,7 +7,7 @@ import PopupWithForm from '../components/PopupWithForm.js'
 function setCardsSection(items) {
   return new Section ({
     data: items,
-    renderer: (data) => {
+    renderer: (thatSection, data) => {
       const card = new Card({
         data,
         handleOpenClick: popupWithImage.open.bind(popupWithImage),
@@ -40,7 +40,7 @@ function setCardsSection(items) {
         }
       }, cardTemplate);
 
-      return card.renderCard(theId)
+      thatSection.addItem(card.renderCard(theId));
     }
   }, cardsContainer)
 }
