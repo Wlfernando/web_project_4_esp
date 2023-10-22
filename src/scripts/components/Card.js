@@ -17,13 +17,13 @@ export default class Card {
     return cardElement
   }
 
-  get Id() {
+  get id() {
     return this._id
   }
 
   renderCard(id) {
     this._element = this._template;
-    
+
     const cardImage = this._element.querySelector('.card__image');
 
     this._setEventListeners();

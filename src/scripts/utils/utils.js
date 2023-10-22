@@ -14,7 +14,7 @@ function setCardsSection(items) {
         handleDeleteClick: (thatCard) => {
           const dltForm = new PopupWithForm({
             handleFormSubmit: () => {
-              api.do('DELETE', api.cards, thatCard.Id)
+              api.do('DELETE', api.cards, thatCard.id)
                 .then(() => thatCard.remover)
                 .catch(showError)
                 .finally(() => dltForm.close())
