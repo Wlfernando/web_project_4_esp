@@ -37,17 +37,17 @@ const
   theId = user.info.id,
 
   cardForm = new PopupWithForm ({
-    handleFormSubmit: (input) => {
+    handleFormSubmit: ({ input, close }) => {
       api.send('POST', api.cards, input)
         .then(setCardsSection)
         .then(cardsSection => cardsSection.renderItems())
         .catch(showError)
-        .finally(() => cardForm.close())
+        .finally(close)
       }
   }, cardFormPopup),
 
   userForm = new PopupWithForm({
-    handleFormSubmit: (input) => {
+    handleFormSubmit: ({ input, close }) => {
       api.send('PATCH', api.me, input)
         .then(userData => new UserInfo(userData))
         .then(editedUser => {
@@ -55,17 +55,17 @@ const
           profileFormBtn.onclick = () => setUserFields(editedUser);
         })
         .catch(showError)
-        .finally(() => userForm.close())
+        .finally(close)
     }
   }, profileFormPopup),
 
   avatarForm = new PopupWithForm({
-    handleFormSubmit: (input) => {
+    handleFormSubmit: ({ input, close }) => {
       api.send('PATCH', api.avatar, input, api.me)
         .then(userData => new UserInfo(userData))
         .then(editedAvatar => editedAvatar.setAvatar())
         .catch(showError)
-        .finally(() => avatarForm.close())
+        .finally(close)
     }
   }, avatarPopup);
 
