@@ -24,16 +24,17 @@ function setCardsSection(items) {
         },
         handleLikeClick: (e, { likes, id, confirmLike }) => {
           const
-            haveLike = likes.some(like => {
+            index = likes.findIndex((like) => {
               like._id ??= like.id
-              return like._id  === theId
+              return like._id === theId
             }),
-            setLikeApi = haveLike ? 'DELETE' : 'PUT',
+            haveLike = -1 < index,
+            setLikeOnApi = haveLike ? 'DELETE' : 'PUT',
             setLikeOnCard = haveLike
-              ? likes.pop()
+              ? likes.splice(index, 1)
               : likes.push(user.info);
 
-          api.do(setLikeApi, api.likes, id)
+          api.do(setLikeOnApi, api.likes, id)
             .then(() => {
               setLikeOnCard;
               confirmLike(e);
