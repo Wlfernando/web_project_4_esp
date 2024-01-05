@@ -22,13 +22,13 @@ const cardTemplate = '#cards';
 const cardsContainer = '.cards';
 
 const formConfig = {
-  formSelector: ".popup__container",
-  formFieldSet: ".popup__content",
-  inputSelector: ".popup__item",
+  formSelector: ".form",
+  formFieldSet: ".form__fieldset",
+  inputSelector: ".form__item",
   submitButtonSelector: ".button__submit",
   inactiveButtonClass: "button_inactive",
-  inputErrorClass: "popup__item_type_error",
-  errorClass: "popup__item-error_active"
+  inputErrorClass: "form__item_type_error",
+  errorClass: "form__item-error_active"
 }
 
 const formList = Array.from(forms);

@@ -1,15 +1,14 @@
 export default class Api {
-  constructor({
-    baseUrl,
-    headers: {
-      authorization,
-      ["Content-Type"]: ContentType
-    }
-  }) {
+  constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
-    this._authorization = authorization;
-    this._contentType = ContentType;
+    this._authorization = headers.authorization;
+    this._contentType = headers['Content-Type'];
   }
+
+  me = '/web_es_07/users/me';
+  cards = '/web_es_07/cards';
+  avatar = this.me + '/avatar';
+  likes = this.cards + '/likes';
 
   do(action, endPoint, id = null) {
     const anUrl = id

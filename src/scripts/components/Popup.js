@@ -13,10 +13,10 @@ export default class Popup {
     this._removeEventListener();
   }
 
-  _handleClose(e) {
+  _handleClose = (e) => {
     const
-      clicks = ['button__close', 'popup__image-container', 'popup_active'],
-      isClicked = clicks.some(click => e.target.classList.contains(click)),
+      isClicked = ['button__close', 'popup__image-container', 'popup_active']
+        .some(click => e.target.classList.contains(click)),
       event = e.key === 'Escape' || isClicked;
 
     if (event) {
@@ -25,19 +25,12 @@ export default class Popup {
   }
 
   _removeEventListener() {
-    document.removeEventListener('keydown', this._enableClose);
-    this._popupSelector.removeEventListener('click', this._enableClose);
+    this._popupSelector.removeEventListener('click', this._handleClose);
+    document.removeEventListener('keydown', this._handleClose);
   }
 
   setEventListeners() {
-    this._enableClose = this._handleClose.bind(this);
-
-    document.addEventListener(
-      'keydown', this._enableClose
-    )
-
-    this._popupSelector.addEventListener(
-      'click', this._enableClose
-    )
+    document.addEventListener('keydown', this._handleClose);
+    this._popupSelector.addEventListener('click', this._handleClose);
   }
 }

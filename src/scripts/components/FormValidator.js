@@ -1,5 +1,5 @@
 export default class FormValidator {
-  constructor(config, formElement){
+  constructor(config) {
     this._formSelector = config.formSelector;
     this._formFieldSet = config.formFieldSet;
     this._inputSelector = config.inputSelector;
@@ -7,8 +7,6 @@ export default class FormValidator {
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
-
-    this._formElement = formElement
   }
 
   _showInputError(fieldset, inputElement, errorMessage) {
@@ -72,11 +70,14 @@ export default class FormValidator {
   }
 
   enableValidation() {
-    const form = this._formElement;
-    const fieldsetList = Array.from(form.querySelectorAll(this._formFieldSet));
-
-    fieldsetList.forEach(fieldset => {
-      this._setEventListeners(form, fieldset);
-    })
+    Array
+      .from(document.querySelectorAll(this._formSelector))
+      .forEach(form => {
+        Array
+          .from(form.querySelectorAll(this._formFieldSet))
+          .forEach(fieldset => {
+            this._setEventListeners(form, fieldset)
+        })
+      })
   }
 }

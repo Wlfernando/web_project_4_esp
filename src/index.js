@@ -1,5 +1,5 @@
 import{
-  formList, formConfig, profileFormBtn,
+  formConfig, profileFormBtn,
   profileFormPopup, cardFormPopup, cardFormBtn, displayCard,
   avatarPopup, avatar, errorPopup
 } from "./scripts/utils/constants.js";
@@ -12,20 +12,15 @@ import FormValidator from "./scripts/components/FormValidator.js";
 import './pages/index.css';
 import Api from './scripts/components/Api.js';
 
-const api = new Api({
-  baseUrl: "https://around.nomoreparties.co/v1",
-  headers: {
-    authorization: "4f0ec2d8-0a82-401b-be94-8d93fd8bc4fc",
-    "Content-Type": "application/json"
-  }
-})
-
-api.me = '/web_es_07/users/me';
-api.cards = '/web_es_07/cards';
-api.avatar = api.me + '/avatar';
-api.likes = api.cards + '/likes';
-
 const
+  api = new Api({
+    baseUrl: "https://around.nomoreparties.co/v1",
+    headers: {
+      authorization: "4f0ec2d8-0a82-401b-be94-8d93fd8bc4fc",
+      "Content-Type": "application/json"
+    }
+  }),
+
   errorMessage = new PopupWithError(errorPopup),
   showError = errorMessage.open.bind(errorMessage),
 
@@ -34,7 +29,6 @@ const
   user = await api.do('GET', api.me)
     .then(userData => new UserInfo(userData))
     .catch(showError),
-  theId = user.info.id,
 
   cardForm = new PopupWithForm ({
     handleFormSubmit: ({ input, close }) => {
@@ -67,17 +61,16 @@ const
         .catch(showError)
         .finally(close)
     }
-  }, avatarPopup);
+  }, avatarPopup),
+
+  validation = new FormValidator(formConfig);
+
+validation.enableValidation()
 
 api.do('GET', api.cards)
   .then(setCardsSection)
   .then(cardsSection => cardsSection.renderItems())
   .catch(showError)
-
-formList.forEach(formElement => {
-  const form = new FormValidator(formConfig, formElement);
-  form.enableValidation()
-});
 
 profileFormBtn.onclick = () => setUserFields(user);
 
@@ -88,4 +81,4 @@ cardFormBtn.onclick = () => cardForm.open();
 user.setUserInfo();
 user.setAvatar();
 
-export { api, user, theId, showError, popupWithImage, userForm }
+export { api, user, showError, popupWithImage, userForm }

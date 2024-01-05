@@ -1,4 +1,4 @@
-.popup__item {
+.form__item {
   width: 100%;
   box-sizing: border-box;
   border: 0;
@@ -9,26 +9,26 @@
   transition: border-bottom 250ms ease-in;
 }
 
-.popup__item::-webkit-input-placeholder {
+.form__item::-webkit-input-placeholder {
   opacity: .5;
 }
 
-.popup__item::-moz-placeholder {
+.form__item::-moz-placeholder {
   opacity: .5;
 }
 
-.popup__item:-ms-input-placeholder {
+.form__item:-ms-input-placeholder {
   opacity: .5;
 }
 
-.popup__item::-ms-input-placeholder {
+.form__item::-ms-input-placeholder {
   opacity: .5;
 }
 
-.popup__item::placeholder {
+.form__item::placeholder {
   opacity: .5;
 }
 
-.popup__item:focus {
+.form__item:focus {
   outline-color: #77adf3;
 }

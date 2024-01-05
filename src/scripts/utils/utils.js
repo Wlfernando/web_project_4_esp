@@ -1,10 +1,12 @@
-import { api, user, theId, showError, popupWithImage, userForm } from '../../index.js'
+import { api, user, showError, popupWithImage, userForm } from '../../index.js'
 import { deleteForm, cardTemplate, cardsContainer } from './constants.js'
 import Section from '../components/Section.js'
 import Card from '../components/Card.js'
 import PopupWithForm from '../components/PopupWithForm.js'
 
 function setCardsSection(items) {
+  const theId = user.info.id;
+  
   return new Section ({
     data: items,
     renderer: (thatSection, data) => {
@@ -12,22 +14,18 @@ function setCardsSection(items) {
         data,
         handleOpenClick: popupWithImage.open.bind(popupWithImage),
         handleDeleteClick: ({ id, remove }) => {
-          const dltForm = new PopupWithForm({
+          new PopupWithForm({
             handleFormSubmit: ({ close }) => {
               api.do('DELETE', api.cards, id)
                 .then(remove)
                 .catch(showError)
                 .finally(close)
             }
-          }, deleteForm)
-          dltForm.open()
+          }, deleteForm).open()
         },
         handleLikeClick: (e, { likes, id, confirmLike }) => {
           const
-            index = likes.findIndex((like) => {
-              like._id ??= like.id
-              return like._id === theId
-            }),
+            index = likes.findIndex((like) => (like._id ?? like.id) === theId),
             haveLike = -1 < index,
             setLikeOnApi = haveLike ? 'DELETE' : 'PUT',
             setLikeOnCard = haveLike
